@@ -1,0 +1,37 @@
+{
+  "name": "@schema-to-yup/types",
+  "version": "0.0.1",
+  "description": "d",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "repository": "",
+  "author": "Kristian Mandrup <kmandrup@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "@schema-to-yup/array-type": "0.0.1",
+    "@schema-to-yup/boolean-type": "0.0.1",
+    "@schema-to-yup/date-type": "0.0.1",
+    "@schema-to-yup/mixed-type": "0.0.1",
+    "@schema-to-yup/number-type": "0.0.1",
+    "@schema-to-yup/object-type": "0.0.1",
+    "@schema-to-yup/string-type": "0.0.1"
+  },
+  "devDependencies": {
+    "@schema-to-yup/array-type": "*",
+    "@schema-to-yup/boolean-type": "*",
+    "@schema-to-yup/date-type": "*",
+    "@schema-to-yup/mixed-type": "*",
+    "@schema-to-yup/number-type": "*",
+    "@schema-to-yup/object-type": "*",
+    "@schema-to-yup/string-type": "*"
+  },
+  "scripts": {
+    "start": "tsc -w --preserveWatchOutput"
+  }
+}

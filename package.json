@@ -1,0 +1,35 @@
+{
+  "name": "schema-to-yup",
+  "workspaces": [
+    "packages/*"
+  ],
+  "description": "Typescript monorepo",
+  "repository": "https://github.com/kristianmandrup/schema-to-yup",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "prestart": "yarn build",
+    "start": "run-p start:*",
+    "start:stories": "lerna run start --stream --scope=@schema-to-yup/stories",
+    "start:watch": "tsc --build --watch",
+    "pretest": "yarn build",
+    "test": "jest --config=jest.json",
+    "test:stories": "lerna run test --stream --scope=@schema-to-yup/stories",
+    "build": "tsc --build",
+    "build:stories": "lerna run build --stream --scope=@schema-to-yup/stories",
+    "clean": "rimraf packages/*/{tsconfig.tsbuildinfo,lib,dist}"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.7",
+    "@babel/preset-env": "^7.12.7",
+    "@babel/preset-react": "^7.12.7",
+    "@types/jest": "^26.0.15",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "lerna": "^3.22.1",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.4",
+    "typescript": "^4.1.2"
+  }
+}

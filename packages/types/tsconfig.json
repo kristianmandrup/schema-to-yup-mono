@@ -1,0 +1,20 @@
+{
+  "include": [
+    "src"
+  ],
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src"
+  },
+  "references": [
+    { "path": "../array-type" },
+    { "path": "../base-type" },
+    { "path": "../boolean-type" },
+    { "path": "../date-type" },
+    { "path": "../mixed-type" },
+    { "path": "../number-type" },
+    { "path": "../object-type" },
+    { "path": "../string-type" }
+  ]  
+}

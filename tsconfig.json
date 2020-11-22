@@ -1,0 +1,50 @@
+{
+  "exclude": ["node_modules", "dist", "lib", "__tests__", "**/*.test*", "**/*.spec*"],
+  "files":  [],
+  "compilerOptions": {
+    "skipLibCheck": false,
+    "target": "esnext",
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
+    "jsx": "react",
+    "rootDir": ".",
+    "outDir": "lib",
+    "downlevelIteration": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "removeComments": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@stereobooster/*": ["packages/*/src"]
+    },
+    // https://github.com/RyanCavanaugh/learn-a/#tsconfigsettingsjson
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+  },
+  "references": [
+    { "path": "packages/array-type" },
+    { "path": "packages/base-type" },
+    { "path": "packages/boolean-type" },
+    { "path": "packages/builder" },    
+    { "path": "packages/conditions" },
+    { "path": "packages/constraints" },
+    { "path": "packages/core" },
+    { "path": "packages/date-type" },
+    { "path": "packages/mixed-type" },
+    { "path": "packages/number-type" },
+    { "path": "packages/object-type" },
+    { "path": "packages/string-type" },
+    { "path": "packages/types" },
+    { "path": "packages/validator-bridge" }
+  ]
+}
