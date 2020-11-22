@@ -2,6 +2,10 @@ import { Loggable } from "@schema-to-yup/core";
 import { TypeErrorHandler } from "./type-error-handler";
 
 export class BaseTypeConstraint extends Loggable {
+  typeHandler: any;
+  value: any;
+  errorHandler: any;
+
   constructor(handler, opts = {}) {
     super(opts);
     this.typeHandler = handler;

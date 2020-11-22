@@ -1,9 +1,11 @@
 import * as yup from "yup";
 import { typeMatcher, Base } from "@schema-to-yup/core";
+const { isObjectType } = typeMatcher;
 
 export * from "./resolver";
 export * from "./constraint-builder";
-export * from "./error";
+export * from "@schema-to-yup/core/lib/error";
+import { createYupSchemaEntry } from "./entry";
 
 function isObject(type: string) {
   return type && type === "object";
@@ -14,7 +16,18 @@ export function buildYup(schema: any, config = {}) {
 }
 
 export class YupBuilder extends Base {
-  constructor(schema: any, config = {}) {
+  config: any;
+  schema: any;
+  type: string;
+  properties: any;
+  additionalProps: any;
+  required: any[];
+  shapeConfig: any;
+  validSchema: boolean = false;
+  objPropsShape: any;
+  addPropsShape: any;
+
+  constructor(schema: any, config: any = {}) {
     super(config);
     config.buildYup = buildYup;
     config.createYupSchemaEntry =
@@ -35,13 +48,13 @@ export class YupBuilder extends Base {
     }
 
     if (!typeMatcher.isObjectType(props)) {
-      const props = JSON.stringify(properties);
+      const props = JSON.stringify(this.properties);
       this.error(`invalid schema: must have a properties object: ${props}`);
       return;
     }
 
     const name = this.getName(schema);
-    const properties = this.normalizeRequired(schema);
+    const properties = this.normalizeRequired();
     const shapeConfig = this.propsToShape({ properties, name, config });
 
     this.shapeConfig = shapeConfig;

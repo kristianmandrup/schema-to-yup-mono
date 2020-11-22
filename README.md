@@ -4,26 +4,18 @@
 
 - [Monorepo](https://www.atlassian.com/git/tutorials/monorepos) project, to be able to comfortably to develop several packages, which can be used separately but as well together
 - Typescript
-- React
 - Testing library. I want to start with Jest, but as well we can choose something else
-- Storybook (or similar tool) for React components development and showcasing
 - (nice to have, but optional) ESlint with [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)
 - (nice to have, but optional) Rollup to bundle and minify
 - (nice to have, but optional) pre-commit hooks with prettier
 
+## Rename js to ts in ./packages recursively
+
+`find packages -name "\*.js" -exec sh -c 'mv "$1" "${1%.js}.ts"' \_ {} \;`
+
 ## Packages structure
 
-- [`d`](packages/d) - utility library
-- [`b`](packages/b) - React components library, which depends on `d`
-- [`c`](packages/c) - another React components library, which depends on `d`
-- [`stories`](packages/stories) - showcase of `b` and `c` package's compnents as well used for development (initial plan, can change later)
-
 ## Tools
-
-**⚠️⚠️⚠️ Info in this section is stale ⚠️⚠️⚠️**:
-  - **Problem 1** is resolved in PR [#2](https://github.com/stereobooster/typescript-monorepo/pull/2)
-  - **Problem 2** is resolved in PR [#5](https://github.com/stereobooster/typescript-monorepo/pull/5)
-  - **Problem 4** is resolved in PR [#4](https://github.com/stereobooster/typescript-monorepo/pull/4)
 
 ### yarn
 
@@ -119,30 +111,6 @@ and to `package.json` for `d`, `b`, `c`
 }
 ```
 
-**Problem 1**: because of sub-dependencies (packages `b` and `c` depend on `d`, `stories` depends on `d`, `b`, `c`) we need to build packages accordingly, e.g. first `d`, second `b` and `c`, third `stories`. That is why we can't use `--parallel` flag for `lerna` for build command.
-
-### React
-
-Install `@types/react`, `@types/react-dom`, `react`, `react-dom`.
-
-Add to `tsconfig.base.json`:
-
-```json
-"compilerOptions": {
-  "lib": ["dom", "esnext"],
-  "jsx": "react",
-}
-```
-
-Add to subpackage's `package.json`:
-
-```json
-"peerDependencies": {
-  "react": "^16.8.0",
-  "react-dom": "^16.8.0"
-}
-```
-
 ### Jest
 
 We will use `jest` to run tests. Install `@types/jest`, `@types/react-test-renderer`, `jest`, `react-test-renderer`. Add `jest.json`. To eanbale TypeScript:
@@ -187,64 +155,3 @@ Add command to `package.json`
   "test": "jest --config=jest.json"
 }
 ```
-
-~~**Problem 2**: we will publish modules as ES5 + CommonJS, which makes no sense for React package, which would require some kind of bundler to consume packages, like Parcel or Webpack.~~
-
-**Problem 3**: there are sub-dependencies, so we need to build all packages first and only after we can run tests. That is why we need `pretest` script.
-
-### Storybook
-
-Install storybook according to [official instruction](https://storybook.js.org/docs/configurations/typescript-config/).
-
-We will need the following things in `package.json`:
-
-```json
-"scripts": {
-  "start": "start-storybook -p 8080",
-  "build": "build-storybook -o dist"
-},
-"dependencies": {
-  "@stereobooster/d": "*",
-  "@stereobooster/b": "*",
-  "@stereobooster/c": "*"
-},
-"devDependencies": {
-  "@babel/core": "7.4.3",
-  "@storybook/addon-info": "^5.0.11",
-  "@storybook/addons": "5.0.6",
-  "@storybook/core": "5.0.6",
-  "@storybook/react": "5.0.6",
-  "@types/storybook__addon-info": "^4.1.1",
-  "@types/storybook__react": "4.0.1",
-  "awesome-typescript-loader": "^5.2.1",
-  "babel-loader": "8.0.5",
-  "react-docgen-typescript-loader": "^3.1.0"
-}
-```
-
-Create configurations in `.storybook` (again, based on official instruction). Now we can create stories in `/src/b` for `b` packages, in `/src/c` for `c` package.
-
-Storybook will watch for changes in `stories/src`, but not for changes in `d/src`, `b/src`, `c/src`. We will need to use TypeScript to watch for changes in other packages.
-
-Add to `package.json` of `d`, `b` and `c` packages:
-
-```json
-"scripts": {
-  "start": "tsc -w"
-}
-```
-
-and to the root `package.json`:
-
-```json
-"scripts": {
-  "prestart": "yarn build",
-  "start": "lerna run start --stream --parallel"
-}
-```
-
-Now a developer can run `yarn start` (in one terminal) and `yarn test --watch` (in another terminal) to get development environment - scripts will watch for changes and reload.
-
-**Problem 3**: there are sub-dependencies, so we need to build all packages first and only after we can run the start script. That is why we need `prestart` script.
-
-~~**Problem 4**: If there is type error in stories it will show up in the browser, but if there is type error in `d`, `b` or `c` packages it will only show up in terminal, which spoils all DX, because instead of switching between editor and browser you will need to switch to terminal as well to check if there is an error or not.~~

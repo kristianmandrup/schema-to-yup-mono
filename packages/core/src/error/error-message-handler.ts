@@ -1,6 +1,12 @@
 import { Loggable } from "../loggable";
 
 export class ErrorMessageHandler extends Loggable {
+  typeHandler: any;
+  constraints: any;
+  errMessages: any[];
+  key: string;
+  type: string;
+
   constructor(typeHandler, config = {}) {
     super(config);
     this.typeHandler = typeHandler;
