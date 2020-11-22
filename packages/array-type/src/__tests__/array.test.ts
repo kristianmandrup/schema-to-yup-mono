@@ -1,9 +1,8 @@
-const { types } = require("../../../src");
-const { toYupArray } = types;
-const { createYupSchemaEntry } = require("../../../src/create-entry");
-const defaults = require("../../../src/types/defaults/json-schema").default;
+import { toYupArray } from "@schema-to-yup/array-type";
+import { createYupSchemaEntry } from "@schema-to-yup/builder";
+import { defaults } from "@schema-to-yup/core";
+import * as yup from "yup";
 
-const yup = require("yup");
 const defaultConfig = { ...defaults, createYupSchemaEntry };
 
 const create = (fieldDef, config = {}) => {
@@ -22,9 +21,9 @@ const createArrNoKey = (value, config = defaultConfig) => {
   return toYupArray(obj, config);
 };
 
-const createSchema = list => {
+const createSchema = (list) => {
   return yup.object().shape({
-    list
+    list,
   });
 };
 
@@ -154,7 +153,7 @@ describe("toYupArray", () => {
       const constraint = yup.number().min(2);
 
       const schema = yup.object().shape({
-        list: yup.array().of(constraint)
+        list: yup.array().of(constraint),
       });
 
       test("valid", () => {

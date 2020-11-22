@@ -1,4 +1,4 @@
-import yup from "yup";
+import * as yup from "yup";
 import { buildYup } from "@schema-to-yup/builder";
 import { toYupString } from "@schema-to-yup/string-type";
 export { buildYup };

@@ -1,52 +1,40 @@
-const { toYupNumber, toYupNumberSchemaEntry, yup } = require("./_imports");
+import { toYupNumber, toYupNumberSchemaEntry, yup } from "./_imports";
 
-const isInteger = fieldDef =>
+export const isInteger = (fieldDef) =>
   fieldDef && (fieldDef.type === "int" || fieldDef.type === "integer");
 
-const isNumber = fieldDef =>
+export const isNumber = (fieldDef) =>
   fieldDef && (fieldDef.type === "number" || isInteger(fieldDef));
 
-const config = { isNumber, isInteger };
+export const config = { isNumber, isInteger };
 
-const createNum = value => {
+export const createNum = (value) => {
   const obj = { value, config, key: "value", type: "number" };
   return toYupNumber(obj, config);
 };
 
-const createEntry = fieldDef => {
+export const createEntry = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
   return toYupNumberSchemaEntry(obj, config);
 };
 
-const createNumEntry = value => {
+export const createNumEntry = (value) => {
   const obj = { value, config, key: "value", type: "number" };
   return toYupNumberSchemaEntry(obj, config);
 };
 
-const createIntEntry = value => {
+export const createIntEntry = (value) => {
   const obj = { value, config, key: "value", type: "int" };
   return toYupNumberSchemaEntry(obj, config);
 };
 
-const createNumNoKeyEntry = value => {
+export const createNumNoKeyEntry = (value) => {
   const obj = { value, config, type: "number" };
   return toYupNumberSchemaEntry(obj, config);
 };
 
-const createSchema = value => {
+export const createSchema = (value) => {
   return yup.object().shape({
-    value
+    value,
   });
-};
-
-module.exports = {
-  createNum,
-  createEntry,
-  createNumEntry,
-  createIntEntry,
-  createNumNoKeyEntry,
-  createSchema,
-  isInteger,
-  isNumber,
-  config
 };

@@ -1,4 +1,4 @@
-const { createNumEntry, createSchema } = require("./_helpers");
+import { createNumEntry, createSchema } from "./_helpers";
 
 describe("positive - validate", () => {
   const entry = createNumEntry({ positive: true });
@@ -6,7 +6,7 @@ describe("positive - validate", () => {
 
   test("negative: -1", () => {
     const valid = schema.isValidSync({
-      value: -1
+      value: -1,
     });
     expect(valid).toBeFalsy();
   });

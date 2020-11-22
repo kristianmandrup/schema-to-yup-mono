@@ -1,4 +1,4 @@
-const { createNumEntry, createSchema } = require("./_helpers");
+import { createNumEntry, createSchema } from "./_helpers";
 
 describe("min", () => {
   describe("schema opts", () => {
@@ -26,7 +26,7 @@ describe("min", () => {
 
       test("less: invalid", () => {
         const valid = schema.isValidSync({
-          value: 0
+          value: 0,
         });
         expect(valid).toBeFalsy();
       });
@@ -37,7 +37,7 @@ describe("min", () => {
 
       test("more: valid", () => {
         const valid = schema.isValidSync({
-          value: 5
+          value: 5,
         });
         expect(valid).toBeTruthy();
       });
@@ -49,7 +49,7 @@ describe("min", () => {
 
       test("less: invalid", () => {
         const valid = schema.isValidSync({
-          value: -1
+          value: -1,
         });
         expect(valid).toBeFalsy();
       });
@@ -60,7 +60,7 @@ describe("min", () => {
 
       test("more: valid", () => {
         const valid = schema.isValidSync({
-          value: 5
+          value: 5,
         });
         expect(valid).toBeTruthy();
       });
@@ -72,7 +72,7 @@ describe("min", () => {
 
       test("less: invalid", () => {
         const valid = schema.isValidSync({
-          value: -2
+          value: -2,
         });
         expect(valid).toBeFalsy();
       });
@@ -83,7 +83,7 @@ describe("min", () => {
 
       test("more: valid", () => {
         const valid = schema.isValidSync({
-          value: 0
+          value: 0,
         });
         expect(valid).toBeTruthy();
       });

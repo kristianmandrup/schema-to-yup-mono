@@ -1,4 +1,4 @@
-import { Guard } from '../_guard';
+import { Guard } from "@schema-to-yup/core";
 
 class NumberGuard extends Guard {
   constructor(obj, config) {
@@ -14,7 +14,4 @@ function createNumberGuard(obj, config) {
   return new NumberGuard(obj, config);
 }
 
-export {
-  createNumberGuard,
-  NumberGuard
-};
+export { createNumberGuard, NumberGuard };

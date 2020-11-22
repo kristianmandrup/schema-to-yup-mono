@@ -1,5 +1,5 @@
-const { createRangeConstraint } = require("./_imports");
-const { createNum } = require("./_helpers");
+import { createRangeConstraint } from "@schema-to-yup/constraints";
+import { createNum } from "./_helpers";
 
 function addContraints(obj) {
   const num = createNum(obj);

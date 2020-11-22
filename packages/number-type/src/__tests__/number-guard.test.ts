@@ -1,14 +1,14 @@
-const { createNumberGuard } = require("./_imports");
+import { createNumberGuard } from "./_imports";
 
-const isInteger = fieldDef =>
+const isInteger = (fieldDef) =>
   fieldDef && (fieldDef.type === "int" || fieldDef.type === "integer");
 
-const isNumber = fieldDef =>
+const isNumber = (fieldDef) =>
   fieldDef && (fieldDef.type === "number" || isInteger(fieldDef));
 
 const config = { isNumber, isInteger };
 
-const createGuard = value => {
+const createGuard = (value) => {
   const obj = { value, config, key: "value", type: "number" };
   return createNumberGuard(obj, config);
 };

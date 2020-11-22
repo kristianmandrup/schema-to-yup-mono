@@ -1,6 +1,5 @@
 import { toYupObject, createObjectHandler } from "@schema-to-yup/object-type";
 import { buildYup } from "@schema-to-yup/builder";
-import yup from "yup";
 
 const isObject = (fieldDef) => fieldDef && fieldDef.type === "object";
 const config = { isObject };

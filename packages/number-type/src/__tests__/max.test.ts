@@ -1,4 +1,4 @@
-const { createNumEntry, createSchema } = require("./_helpers");
+import { createNumEntry, createSchema } from "./_helpers";
 
 describe("max", () => {
   describe("schema opts", () => {
@@ -21,7 +21,7 @@ describe("max", () => {
 
     test("less", () => {
       const valid = schema.isValidSync({
-        value: 0
+        value: 0,
       });
       expect(valid).toBeTruthy();
     });
@@ -32,7 +32,7 @@ describe("max", () => {
 
     test("more", () => {
       const valid = schema.isValidSync({
-        value: 5
+        value: 5,
       });
       expect(valid).toBeFalsy();
     });

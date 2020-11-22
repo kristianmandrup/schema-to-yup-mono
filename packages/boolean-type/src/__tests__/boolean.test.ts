@@ -1,19 +1,18 @@
-const { types } = require("../../../src");
-const { toYupBoolean } = types;
+import { toYupBoolean } from "@schema-to-yup/boolean-type";
 
-const isBoolean = fieldDef => fieldDef && fieldDef.type === "boolean";
+const isBoolean = (fieldDef) => fieldDef && fieldDef.type === "boolean";
 const config = { isBoolean };
-const create = fieldDef => {
+const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
   return toYupBoolean(obj, config);
 };
 
-const createBool = value => {
+const createBool = (value) => {
   const obj = { value, config, key: "x", type: "boolean" };
   return toYupBoolean(obj, config);
 };
 
-const createBoolNoKey = value => {
+const createBoolNoKey = (value) => {
   const obj = { value, config, type: "boolean" };
   return toYupBoolean(obj, config);
 };

@@ -1,10 +1,10 @@
-const {
+import {
   createEntry,
   createNumEntry,
   createIntEntry,
-  createNumNoKey,
-  isNumber
-} = require("./_helpers");
+  createNumNoKeyEntry,
+  isNumber,
+} from "./_helpers";
 
 describe("isNumber", () => {
   test("int", () => {
@@ -50,6 +50,6 @@ describe("toYupNumber", () => {
   });
 
   test("no key - throws missing key", () => {
-    expect(() => createNumNoKey({})).toThrow();
+    expect(() => createNumNoKeyEntry({})).toThrow();
   });
 });
