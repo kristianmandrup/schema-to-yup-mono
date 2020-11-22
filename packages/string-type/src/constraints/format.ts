@@ -1,10 +1,10 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const format = (handler, opts) => new Format(handler, opts)
+export const format = (handler, opts) => new Format(handler, opts);
 
 export class Format extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {

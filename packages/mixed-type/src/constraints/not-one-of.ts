@@ -1,10 +1,11 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
+import { typeMatcher } from "@schema-to-yup/core";
 
-export const notOneOf = (handler, opts) => new NotOneOf(handler, opts)
+export const notOneOf = (handler, opts) => new NotOneOf(handler, opts);
 
 export class NotOneOf extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {
@@ -14,5 +15,5 @@ export class NotOneOf extends BaseTypeConstraint {
     values = Array.isArray(values) ? values : [values];
     // TODO: pass value as constraintValue not value
     return this.addConstraint("notOneOf", { values });
-  }  
+  }
 }

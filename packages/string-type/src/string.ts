@@ -27,10 +27,6 @@ export class YupString extends YupBaseType {
     ];
   }
 
-  constraintNameFor(...names) {
-    return names.find((name) => this.constraints[name]);
-  }
-
   normalize() {
     this.constraints.pattern =
       this.constraints.pattern ||

@@ -4,5 +4,9 @@
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": "src"
-  }
+  },
+  "references": [
+    { "path": "../core" },
+    { "path": "../base-type" }
+  ]
 }

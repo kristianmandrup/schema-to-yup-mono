@@ -1,24 +1,23 @@
-import { types, buildYup } from "../../../src";
-import { createObjectHandler } from "../../../src/types/object/handler";
-const { toYupObject } = types;
-const yup = require("yup");
+import { toYupObject, createObjectHandler } from "@schema-to-yup/object-type";
+import { buildYup } from "@schema-to-yup/builder";
+import yup from "yup";
 
-const isObject = fieldDef => fieldDef && fieldDef.type === "object";
+const isObject = (fieldDef) => fieldDef && fieldDef.type === "object";
 const config = { isObject };
 
 export { buildYup, createObjectHandler };
 
-export const create = fieldDef => {
+export const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
   return toYupObject(obj, config);
 };
 
-export const createObject = value => {
+export const createObject = (value) => {
   const obj = { value, config, key: "x", type: "object" };
   return toYupObject(obj, config);
 };
 
-export const createObjectNoKey = value => {
+export const createObjectNoKey = (value) => {
   const obj = { value, config, type: "object" };
   return toYupObject(obj, config);
 };
@@ -28,12 +27,12 @@ export const dogSchema = {
   title: "Dog",
   properties: {
     name: {
-      type: "string"
+      type: "string",
     },
     age: {
-      type: "number"
-    }
-  }
+      type: "number",
+    },
+  },
 };
 
 export const schema = {
@@ -41,13 +40,13 @@ export const schema = {
   title: "Person",
   properties: {
     name: {
-      type: "string"
+      type: "string",
     },
     dog: dogSchema,
     pets: {
       type: "array",
-      items: dogSchema
-    }
+      items: dogSchema,
+    },
   },
-  required: ["name"]
+  required: ["name"],
 };

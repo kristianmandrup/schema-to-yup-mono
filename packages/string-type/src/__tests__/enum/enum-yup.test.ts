@@ -1,10 +1,10 @@
-var yup = require("yup");
+import yup from "yup";
 
 //check validity
 describe.only("yup schema validation", () => {
   const name = yup.string().oneOf(["a", "b"]);
   const shapeConfig = {
-    name
+    name,
   };
   const schema = yup.object().shape(shapeConfig);
   test("valid json is valid", () => {

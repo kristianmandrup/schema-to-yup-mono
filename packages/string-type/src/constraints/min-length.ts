@@ -1,16 +1,16 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const minLength = (handler, opts) => new MinLength(handler, opts)
+export const minLength = (handler, opts) => new MinLength(handler, opts);
 
 export class MinLength extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {
-    const { constraints, valErrMessageOr } = this
+    const { constraints, valErrMessageOr } = this;
     const { minLength } = constraints;
     const errMsg = valErrMessageOr("minLength", "min");
-    return this.chain(x => minLength && x.min(minLength, errMsg));
+    return this.chain((x) => minLength && x.min(minLength, errMsg));
   }
 }

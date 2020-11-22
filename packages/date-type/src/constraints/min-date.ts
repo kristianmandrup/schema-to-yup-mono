@@ -1,25 +1,30 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseDateConstraint } from "./base-date";
 
-export const minDate = (handler, opts) => new MinDate(handler, opts)
+export const minDate = (handler, opts) => new MinDate(handler, opts);
 
-export class MinDate extends BaseTypeConstraint {
+export class MinDate extends BaseDateConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {
-    const { valErrMessageOr, helper, constraints } = this
+    const { valErrMessageOr, helper, constraints } = this;
     const minDate = constraints.minDate || constraints.min;
-    const { toDate, transformToDate, isValidDateType, handleInvalidDate } = helper
+    const {
+      toDate,
+      transformToDate,
+      isValidDateType,
+      handleInvalidDate,
+    } = helper;
 
-    if (typeMatcher.isNothing(minDate)) {
+    if (this.isNothing(minDate)) {
       return this;
     }
     const $minDate = transformToDate(minDate);
     if (!isValidDateType($minDate)) {
       return handleInvalidDate("minDate", $minDate);
     }
-    const errMsg = valErrMessageOr("minDate", "min")
-    return this.chain(x => $minDate && x.min(toDate($minDate), errMsg))
+    const errMsg = valErrMessageOr("minDate", "min");
+    return this.chain((x) => $minDate && x.min(toDate($minDate), errMsg));
   }
 }

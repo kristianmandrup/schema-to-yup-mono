@@ -1,22 +1,42 @@
 import { typeMatcher, Loggable } from "@schema-to-yup/core";
-const { isNothing } = typeMatcher;
+const { isNothing, isPresent } = typeMatcher;
 
 export class ConstraintBuilder extends Loggable {
-  constructor(typeHandler, config = {}) {
+  handler: any;
+  constraintsAdded: any;
+
+  constructor(handler, config = {}) {
     super(config);
-    this.typeHandler = typeHandler;
+    this.handler = handler;
     this.constraintsAdded = {};
-    this.delegators.map((name) => {
-      this[name] = typeHandler[name];
-    });
   }
 
-  get delegators() {
-    return ["errMessages", "base", "key", "constraints", "errorMessageHandler"];
+  get errMessages() {
+    return this.handler.errMessages;
+  }
+
+  get base() {
+    return this.handler.base;
+  }
+
+  set base(inst) {
+    this.handler.base = inst;
+  }
+
+  get key() {
+    return this.handler.key;
+  }
+
+  get constraints() {
+    return this.handler.constraints;
+  }
+
+  get errorMessageHandler() {
+    return this.handler.errorMessageHandler;
   }
 
   // TODO: refactor into smaller methods!
-  build(propName, opts = {}) {
+  build(propName: string, opts: any = {}) {
     let {
       constraintName,
       constraintValue,
@@ -92,7 +112,7 @@ export class ConstraintBuilder extends Loggable {
     constraintValue,
     { constraintName, constraintFn, errFn }
   ) {
-    if (this.isPresent(constraintValue)) return;
+    if (isPresent(constraintValue)) return;
 
     this.onConstraintAdded({ name: constraintName });
 
@@ -104,7 +124,7 @@ export class ConstraintBuilder extends Loggable {
     constraintValue,
     { constraintName, constraintFn, errFn }
   ) {
-    if (!this.isPresent(constraintValue)) return;
+    if (!isPresent(constraintValue)) return;
 
     this.onConstraintAdded({ name: constraintName, value: constraintValue });
 
@@ -119,7 +139,7 @@ export class ConstraintBuilder extends Loggable {
   }
 
   multiValueConstraint(values, { constraintFn, constraintName, errFn }) {
-    if (!this.isPresent(values)) return;
+    if (!isPresent(values)) return;
 
     // call yup constraint function with multiple arguments
     if (!Array.isArray(values)) {
@@ -164,7 +184,7 @@ export class ConstraintBuilder extends Loggable {
     return ["required", "email", "url", "format"];
   }
 
-  addValueConstraint(propName, { constraintName, errName } = {}) {
+  addValueConstraint(propName, { constraintName, errName }: any = {}) {
     return this.addConstraint(propName, {
       constraintName,
       value: true,
@@ -175,7 +195,7 @@ export class ConstraintBuilder extends Loggable {
   addConstraint(propName, opts) {
     const constraint = this.build(propName, opts);
     if (constraint) {
-      this.typeHandler.base = constraint;
+      this.base = constraint;
       // const { _whitelist } = constraint;
       // const list = _whitelist && _whitelist.list;
       return constraint;
@@ -183,9 +203,9 @@ export class ConstraintBuilder extends Loggable {
     return false;
   }
 
-  onConstraintAdded({ name, value }) {
+  onConstraintAdded({ name, value }: any) {
     this.constraintsAdded[name] = value;
-    return this.typeHandler;
+    return this.handler;
   }
 
   get constraintsMap() {

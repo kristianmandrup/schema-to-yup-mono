@@ -3,8 +3,6 @@ import { typeMatcher, Base } from "@schema-to-yup/core";
 const { isObjectType } = typeMatcher;
 
 export * from "./resolver";
-export * from "./constraint-builder";
-export * from "@schema-to-yup/core/lib/error";
 import { createYupSchemaEntry } from "./entry";
 
 function isObject(type: string) {
@@ -117,14 +115,14 @@ export class YupBuilder extends Base {
     return this.config.isRequired(value);
   }
 
-  propsToShape(opts = {}) {
+  propsToShape(opts: any = {}) {
     const shape = this.objPropsToShape(opts);
     this.objPropsShape = shape;
     this.addPropsShape = this.additionalPropsToShape(opts, shape);
     return shape;
   }
 
-  additionalPropsToShape(opts: {}, shape: {}) {
+  additionalPropsToShape(_: {}, shape: {}) {
     return shape;
   }
 

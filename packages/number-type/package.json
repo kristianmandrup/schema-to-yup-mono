@@ -23,7 +23,6 @@
     "@schema-to-yup/base-type": "*",
     "@schema-to-yup/constraints": "*"
   },
-
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"
   }

@@ -14,10 +14,15 @@
     "lib"
   ],
   "peerDependencies": {
-    "@schema-to-yup/core": "0.0.1"
+    "@schema-to-yup/core": "0.0.1",
+    "@schema-to-yup/mixed-type": "0.0.1"
   },
   "devDependencies": {
-    "@schema-to-yup/core": "*"
+    "@schema-to-yup/core": "*",
+    "@schema-to-yup/mixed-type": "*"
+  },
+  "dependencies": {
+    "uniq": "^1.0.1"
   },
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"

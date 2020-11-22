@@ -1,10 +1,10 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const url = (handler, opts) => new Url(handler, opts)
+export const url = (handler, opts) => new Url(handler, opts);
 
 export class Url extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {
@@ -15,7 +15,7 @@ export class Url extends BaseTypeConstraint {
       constraintValue: true,
       constraintName,
       method,
-      errName: method
+      errName: method,
     });
     return this;
   }

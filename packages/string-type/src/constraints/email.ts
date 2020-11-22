@@ -1,11 +1,10 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
-import { typeMatcher } from "../../_type-matcher";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const email = (handler, opts) => new Email(handler, opts)
+export const email = (handler, opts) => new Email(handler, opts);
 
 export class Email extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {
@@ -16,7 +15,7 @@ export class Email extends BaseTypeConstraint {
       constraintValue: true,
       constraintName,
       method,
-      errName: method
+      errName: method,
     });
     return this;
   }

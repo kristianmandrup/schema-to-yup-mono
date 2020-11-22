@@ -6,5 +6,9 @@
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": "src"
-  }
+  },
+  "references": [
+    { "path": "../core" },
+    { "path": "../mixed-type" }
+  ]
 }

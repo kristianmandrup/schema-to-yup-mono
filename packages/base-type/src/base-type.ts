@@ -1,8 +1,10 @@
-import { Converter } from './converter'
-import { TypeModeSelector } from './type-mode-selector'
-import { TypeValueProcessor } from './type-value-processor'
-import { TypeErrorHandler } from './type-error-handler'
-import { YupMixed } from './mixed'
+import { Converter } from "@schema-to-yup/base-type/src/converter";
+import { TypeModeSelector } from "./type-mode-selector";
+import { TypeValueProcessor } from "./type-value-processor";
+import { TypeErrorHandler } from "./type-error-handler";
+import { YupMixed } from "@schema-to-yup/mixed-type";
+import { Base } from "@schema-to-yup/core";
+import * as yup from "yup";
 
 const defaults = {
   classMap: {
@@ -10,82 +12,142 @@ const defaults = {
     YupMixed,
     TypeModeSelector,
     TypeValueProcessor,
-    TypeErrorHandler
-  }
-}
+    TypeErrorHandler,
+  },
+};
 
 export class YupBaseType extends Base {
-  constructor(opts = {}) {
+  yup: any;
+  key?: string;
+  type?: string;
+  schema: any;
+  properties: any;
+  value: any;
+  base: any;
+  constraints: any;
+  format?: string;
+
+  typeErrorHandler: any;
+  mixed: any;
+  converter: any;
+  constraintsProcessor: any;
+  typeModeSelector: any;
+  typeValueProcessor: any;
+  errMessages: any;
+  constraintsAdded: any;
+
+  constructor(opts: any = {}) {
     super(opts.config);
-    this.init()
+    this.init();
+  }
+
+  get yupType() {
+    return "mixed";
   }
 
   setTypeInstance(inst) {
-    this.base = inst || this.base
-    return this
+    this.base = inst || this.base;
+    return this;
   }
 
   chain(cb) {
-    return this.setTypeInstance(cb(this.base))
+    return this.setTypeInstance(cb(this.base));
   }
 
   setInstType(name = this.yupType) {
-    this.type = name;    
-    const inst = this.yup[name]()
-    return this.setTypeInstance(inst)
+    this.type = name;
+    const inst = this.yup[name]();
+    return this.setTypeInstance(inst);
   }
 
   valErrMessage(msgName) {
-    return this.typeErrorHandler.valErrMessage(msgName)
+    return this.typeErrorHandler.valErrMessage(msgName);
   }
 
   valErrMessageOr(...msgNames) {
-    return this.typeErrorHandler.valErrMessageOr(...msgNames)
+    return this.typeErrorHandler.valErrMessageOr(...msgNames);
   }
 
   addConstraint(alias, opts) {
-    this.constraintsAdder.addConstraint(alias, opts)
+    this.constraintsAdder.addConstraint(alias, opts);
   }
 
   validateKey(key, opts) {
     if (!key) {
       this.error(`create: missing key ${this.stringify(opts)}`);
     }
-    return this
+    return this;
   }
 
   validateValue(value, opts) {
     if (!value) {
       this.error(`create: missing value ${this.stringify(opts)}`);
     }
-    return this
+    return this;
   }
 
   validateOnCreate(key, value, opts) {
-    this.validateKey(key, opts)
-    this.validateValue(value, opts)
+    this.validateKey(key, opts);
+    this.validateValue(value, opts);
   }
 
   init() {
-    this.setYupType()
-    this.mixed = this.createMixed()
-    this.converter = this.createConverter()  
-    this.constraintsProcessor = this.createConstraintsProcessor()  
-    this.typeModeSelector = this.createTypeModeSelector()
-    this.typeValueProcessor = this.createTypeValueProcessor()
-    this.typeErrorHandler = this.createTypeErrorHandler()
-    return this
+    this.configure();
+    this.initHelpers();
+    return this;
+  }
+
+  configure() {
+    const { opts } = this;
+    let { schema, key, value, config } = opts;
+    config = config || {};
+    schema = schema || {};
+    this.validateOnCreate(key, value, opts);
+    this.yup = yup;
+    this.key = key;
+    this.schema = schema;
+    this.properties = schema.properties || {};
+    this.value = value;
+    this.constraints = this.getConstraints();
+    this.format = value.format || this.constraints.format;
+    this.config = config || {};
+    this.setInstType("mixed");
+    this.errMessages = config.errMessages || {};
+    this.constraintsAdded = {};
+    return this;
+  }
+
+  constraintNameFor(...names) {
+    return names.find((name) => this.constraints[name]);
+  }
+
+  initHelpers() {
+    this.mixed = this.createMixed();
+    this.converter = this.createConverter();
+    this.constraintsProcessor = this.createConstraintsProcessor();
+    this.typeModeSelector = this.createTypeModeSelector();
+    this.typeValueProcessor = this.createTypeValueProcessor();
+    this.typeErrorHandler = this.createTypeErrorHandler();
+    return this;
   }
 
   setClassMap() {
-    const { config } = this
+    const { config } = this;
     this.classMap = {
       ...defaults.classMap,
-      ...config.classMap || {}
-    }
+      ...(config.classMap || {}),
+    };
   }
 
-  createValueProcessor() {
+  getConstraints() {
+    return this.constraintsAdder.getConstraints();
+  }
+
+  createConstraintsProcessor() {
+    return new this.classMap.ConstraintsProcessor(this, this.config);
+  }
+
+  createTypeValueProcessor() {
     return new this.classMap.TypeValueProcessor(this, this.config);
   }
 
@@ -98,7 +160,7 @@ export class YupBaseType extends Base {
   }
 
   get constraintsAdder() {
-    return this.converter.constraintsAdder
+    return this.converter.constraintsAdder;
   }
 
   convert() {
@@ -106,11 +168,15 @@ export class YupBaseType extends Base {
     return this;
   }
 
+  createSchemaEntry() {
+    return this.convert().base;
+  }
+
   createConverter() {
-    return new this.classMap.Converter(this, this.opts)
+    return new this.classMap.Converter(this, this.opts);
   }
 
   createMixed() {
-    return new this.classMap.YupMixed(this.opts)
+    return new this.classMap.YupMixed(this.opts);
   }
 }

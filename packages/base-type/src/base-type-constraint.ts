@@ -1,17 +1,39 @@
-import { Loggable } from "@schema-to-yup/core";
+import { Base } from "@schema-to-yup/core";
 import { TypeErrorHandler } from "./type-error-handler";
 
-export class BaseTypeConstraint extends Loggable {
-  typeHandler: any;
-  value: any;
+export class BaseTypeConstraint extends Base {
+  handler: any;
   errorHandler: any;
 
   constructor(handler, opts = {}) {
     super(opts);
-    this.typeHandler = handler;
-    this.value = handler.value;
+    this.handler = handler;
     this.errorHandler = handler.errorHandler || this.createTypeErrorHandler();
   }
+
+  get yup() {
+    return this.handler.yup;
+  }
+
+  get type() {
+    return this.handler.type;
+  }
+
+  get value() {
+    return this.handler.value;
+  }
+
+  get key() {
+    return this.handler.key;
+  }
+
+  get format() {
+    return this.handler.format;
+  }
+
+  init() {}
+
+  createYupSchemaEntry(_ = {}) {}
 
   createTypeErrorHandler() {
     return new TypeErrorHandler(this.opts);
@@ -23,6 +45,10 @@ export class BaseTypeConstraint extends Loggable {
 
   get constraints() {
     return this.handler.constraints;
+  }
+
+  constraintNameFor(...names) {
+    return this.handler.constraintNameFor(...names);
   }
 
   set base(base) {
@@ -41,7 +67,7 @@ export class BaseTypeConstraint extends Loggable {
     return this.handler.valErrMessageOr(...msgNames);
   }
 
-  get addConstraint() {
-    return this.typeHandler.addConstraint;
+  addConstraint(name, opts = {}) {
+    return this.handler.addConstraint(name, opts);
   }
 }

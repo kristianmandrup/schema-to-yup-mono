@@ -1,10 +1,10 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const integer = (handler, opts) => new Integer(handler, opts)
+export const integer = (handler, opts) => new Integer(handler, opts);
 
 export class Integer extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {

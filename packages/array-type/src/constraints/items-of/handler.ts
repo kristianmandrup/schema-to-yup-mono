@@ -1,11 +1,11 @@
-import { typeMatcher } from "../../../_type-matcher";
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { typeMatcher } from "@schema-to-yup/core";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const itemsOf = (opts) => new ItemsOf(opts)
+export const itemsOf = (opts) => new ItemsOf(opts);
 
 export class ItemsOf extends BaseTypeConstraint {
   constructor(opts = {}) {
-    super(opts)
+    super(opts);
   }
 
   validate(itemsOf) {
@@ -25,24 +25,31 @@ export class ItemsOf extends BaseTypeConstraint {
       );
       return;
     }
-    return true
+    return true;
   }
 
-  process() {    
-    const { createSchema, constraints, validate, createYupSchemaEntry, addConstraint, error } = this
+  process() {
+    const {
+      createSchema,
+      constraints,
+      validate,
+      createYupSchemaEntry,
+      addConstraint,
+      error,
+    } = this;
     let { items, itemsOf } = constraints;
     itemsOf = items || itemsOf || constraints.of;
 
     if (typeMatcher.isNothing(itemsOf)) return;
-    if (!validate(itemsOf)) return
+    if (!validate(itemsOf)) return;
 
     try {
-      const schemaConf = createSchema({itemsOf})
+      const schemaConf = createSchema({ itemsOf });
       const schemaEntry = createYupSchemaEntry(schemaConf);
 
       return addConstraint("of", {
         constraintValue: schemaEntry,
-        propValue: itemsOf
+        propValue: itemsOf,
       });
     } catch (ex) {
       error(`itemsOf: Error - ${itemsOf}`, ex);
@@ -50,11 +57,11 @@ export class ItemsOf extends BaseTypeConstraint {
     return this;
   }
 
-  createSchema({itemsOf}) {
+  createSchema({ itemsOf }) {
     return {
       key: this.key,
       value: itemsOf,
-      config: this.config
+      config: this.config,
     };
   }
 }
