@@ -6,7 +6,7 @@ export class DateConstraintsProcessor extends BaseTypeConstraintsProcessor {
     super(opts);
   }
 
-  maps() {
+  get maps() {
     return {
       factories,
       classMap,

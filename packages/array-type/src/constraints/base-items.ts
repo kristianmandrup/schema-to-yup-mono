@@ -5,9 +5,9 @@ import { ArraySizeHelper } from "./size-helper";
 export class BaseItems extends BaseTypeConstraint {
   sizeHelper: any;
 
-  constructor(handler, opts = {}) {
-    super(handler, opts);
-    this.sizeHelper = new ArraySizeHelper(handler, opts);
+  constructor(handler, config: any = {}) {
+    super(handler, config);
+    this.sizeHelper = new ArraySizeHelper(config);
   }
 
   isNumberType(value) {

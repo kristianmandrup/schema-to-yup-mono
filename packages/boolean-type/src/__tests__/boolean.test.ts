@@ -1,4 +1,4 @@
-import { toYupBoolean } from "@schema-to-yup/boolean-type";
+import { toYupBoolean } from "..";
 
 const isBoolean = (fieldDef) => fieldDef && fieldDef.type === "boolean";
 const config = { isBoolean };

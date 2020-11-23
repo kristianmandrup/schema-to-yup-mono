@@ -1,13 +1,12 @@
-import { Loggable } from "../../_loggable";
-import { typeMatcher } from "../../_type-matcher";
+import { typeMatcher, Loggable } from "@schema-to-yup/core";
 
 export class DateHelpers extends Loggable {
   constructor(opts = {}) {
-    super(opts)
+    super(opts);
   }
 
   toDate(date) {
-    return typeMatcher.toDate(date)
+    return typeMatcher.toDate(date);
   }
 
   // Yup supports string | Date

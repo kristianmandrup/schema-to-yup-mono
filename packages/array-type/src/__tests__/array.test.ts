@@ -1,4 +1,4 @@
-import { toYupArray } from "@schema-to-yup/array-type";
+import { toYupArray } from "../";
 import { createYupSchemaEntry } from "@schema-to-yup/builder";
 import { defaults } from "@schema-to-yup/core";
 import * as yup from "yup";

@@ -3,8 +3,9 @@ import { BaseItems } from "./base-items";
 export const minItems = (handler, opts) => new MinItems(handler, opts);
 
 export class MinItems extends BaseItems {
-  constructor(handler, opts = {}) {
-    super(handler, opts);
+  constructor(handler, opts: any = {}) {
+    super(opts.config);
+    this.handler = handler;
   }
 
   process() {

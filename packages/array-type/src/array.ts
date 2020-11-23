@@ -4,13 +4,15 @@
 import { YupBaseType } from "@schema-to-yup/base-type";
 
 export class YupArray extends YupBaseType {
+  createYupSchemaEntry: any;
+
   constructor(obj) {
     super(obj);
     this.createYupSchemaEntry = this.config.createYupSchemaEntry;
   }
 
   get yupType() {
-    return 'array'
+    return "array";
   }
 
   static create(obj) {

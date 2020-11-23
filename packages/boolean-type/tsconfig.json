@@ -12,7 +12,10 @@
       "path": "../core"
     },
     {
-      "path": "../mixed-type"
+      "path": "../base-type"
+    },
+    {
+      "path": "../constraints"
     }
   ]  
 }

@@ -6,5 +6,8 @@
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": "src"
-  }
+  },
+  "references": [
+    { "path": "../core" }
+  ]
 }

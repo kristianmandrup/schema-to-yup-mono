@@ -1,10 +1,10 @@
-import { typeMatcher } from "../../_type-matcher";
+import { Loggable, typeMatcher } from "@schema-to-yup/core";
 
-export const arraySizeHelper = (opts) => new ArraySizeHelper(opts)
+export const arraySizeHelper = (opts) => new ArraySizeHelper(opts);
 
-export class ArraySizeHelper {
-  constructor(handler, opts = {}) {
-    
+export class ArraySizeHelper extends Loggable {
+  constructor(config = {}) {
+    super(config);
   }
 
   handleInvalidSize(name, value) {

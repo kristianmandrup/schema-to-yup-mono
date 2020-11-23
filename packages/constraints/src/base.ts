@@ -1,31 +1,30 @@
-import { typeMatcher } from '../_type-matcher';
+import { typeMatcher, Loggable } from "@schema-to-yup/core";
 
-class Constraint {
+class Constraint extends Loggable {
+  map: any;
+  typer: any;
+
   constructor(typer, map) {
     super(typer.config);
-    this.map = map || this.$map || {};
+    this.map = map || {};
     this.typer = typer;
-    this.delegates.map(name => {
-      const delegate = typer[name];
-      if (!delegate) {
-        this.error(`missing delegate: ${name}`, {
-          typer
-        });
-      }
-      this[name] = typeMatcher.isFunctionType(delegate)
-        ? delegate.bind(typer)
-        : delegate;
-    });
   }
 
-  get delegates() {
-    return ["constraints", "addConstraint", "constraintsAdded"];
+  get addConstraint() {
+    return this.typer.addConstraint;
+  }
+
+  get constraints() {
+    return this.typer.constraints;
+  }
+
+  get constraintsAdded() {
+    return this.typer.constraintsAdded;
   }
 
   add() {
-    const $map = this.map;
-    Object.keys($map).map(yupMethod => {
-      const names = this.entryNames($map[yupMethod]);
+    Object.keys(this.map).map((yupMethod: string) => {
+      const names = this.entryNames(this.map[yupMethod]);
       this.addConstraints(yupMethod, names);
     });
   }
@@ -34,12 +33,17 @@ class Constraint {
     return Array.isArray(entry) ? entry : [entry];
   }
 
-  addConstraints(method, names = []) {
-    names.map(name => {
+  addConstraints(method, names) {
+    names.map((name) => {
       const value = this.validateAndTransform(name);
       this.addConstraint(name, { method, value });
     });
     return this;
+  }
+
+  //override
+  transform(cv) {
+    return cv;
   }
 
   validateAndTransform(name) {
@@ -69,10 +73,11 @@ class Constraint {
     if (!this.isValidConstraint(cv)) {
       return this.handleInvalidConstraint(name, cv);
     }
+    return this;
   }
 
   // override
-  isValidConstraint(value) {
+  isValidConstraint(_) {
     return true;
   }
 
@@ -87,6 +92,4 @@ class Constraint {
   }
 }
 
-export {
-  Constraint
-};
+export { Constraint };

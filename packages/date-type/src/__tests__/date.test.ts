@@ -1,29 +1,28 @@
-const { types } = require("../../../src");
-const { toYupDate } = types;
-const yup = require("yup");
+import { toYupDate } from "..";
+import * as yup from "yup";
 
-const isDate = fieldDef => fieldDef && fieldDef.type === "date";
+const isDate = (fieldDef) => fieldDef && fieldDef.type === "date";
 const config = { isDate };
-const create = fieldDef => {
+const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
   return toYupDate(obj, config);
 };
 
 const oneDay = 86400000;
 
-const createDate = value => {
+const createDate = (value) => {
   const obj = { value, config, key: "createdAt", type: "date" };
   return toYupDate(obj, config);
 };
 
-const createDateNoKey = value => {
+const createDateNoKey = (value) => {
   const obj = { value, config, type: "date" };
   return toYupDate(obj, config);
 };
 
-const createSchema = createdAt => {
+const createSchema = (createdAt) => {
   return yup.object().shape({
-    createdAt
+    createdAt,
   });
 };
 
@@ -57,7 +56,7 @@ describe("toYupDate", () => {
 
       test("less date", () => {
         const valid = schema.isValidSync({
-          createdAt: new Date(Date.now() - oneDay)
+          createdAt: new Date(Date.now() - oneDay),
         });
         expect(valid).toBeTruthy();
       });
@@ -68,7 +67,7 @@ describe("toYupDate", () => {
 
       test("more date", () => {
         const valid = schema.isValidSync({
-          createdAt: new Date(Date.now() + oneDay)
+          createdAt: new Date(Date.now() + oneDay),
         });
         expect(valid).toBeFalsy();
       });
@@ -92,7 +91,7 @@ describe("toYupDate", () => {
 
       test("less date", () => {
         const valid = schema.isValidSync({
-          createdAt: new Date(Date.now() - oneDay)
+          createdAt: new Date(Date.now() - oneDay),
         });
         expect(valid).toBeFalsy();
       });
@@ -103,7 +102,7 @@ describe("toYupDate", () => {
 
       test("more date", () => {
         const valid = schema.isValidSync({
-          createdAt: new Date(Date.now() + oneDay)
+          createdAt: new Date(Date.now() + oneDay),
         });
         expect(valid).toBeTruthy();
       });

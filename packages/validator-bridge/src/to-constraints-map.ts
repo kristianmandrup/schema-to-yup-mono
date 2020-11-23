@@ -1,5 +1,5 @@
-export const toConstraintsMap = (values, opts = {}) => {
-  return values.reduce((acc, value) => {
+export const toConstraintsMap = (values = [], opts: any = {}) => {
+  return values.reduce((acc: any, value: any) => {
     if (typeof value !== "string" && !(value instanceof Object)) {
       if (opts.throws !== false) {
         throw `toConstraintsMap: invalid entry ${value}`;

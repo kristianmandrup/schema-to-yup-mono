@@ -1,5 +1,5 @@
-import { toConstraintsMap, extendYupApi } from '.';
-import * as yup from 'yup';
+import { toConstraintsMap, extendYupApi } from ".";
+import * as yup from "yup";
 describe("toConstraintsMap", () => {
   test("no args - throws", () => {
     expect(() => toConstraintsMap()).toThrow();
@@ -10,11 +10,11 @@ describe("toConstraintsMap", () => {
   });
 
   test("number: 0 - throws", () => {
-    expect(() => toConstraintsMap(0)).toThrow();
+    expect(() => toConstraintsMap(0 as any)).toThrow();
   });
 
   test("string: abc - throws", () => {
-    expect(() => toConstraintsMap(abc)).toThrow();
+    expect(() => toConstraintsMap("abc" as any)).toThrow();
   });
 
   test("string item: [`abc`] - ok", () => {
@@ -28,14 +28,14 @@ describe("toConstraintsMap", () => {
   test("object item: `[{name: 'xyz'}]` - ok", () => {
     expect(() => toConstraintsMap([{ name: "xyz" }])).not.toThrow();
     expect(toConstraintsMap([{ name: "xyz" }])).toEqual({
-      xyz: { name: "xyz" }
+      xyz: { name: "xyz" },
     });
   });
 });
 
 describe("extendYupApi", () => {
   const validator = {
-    hash: () => true
+    hash: () => true,
   };
 
   const constraints = [{ name: "hash" }];

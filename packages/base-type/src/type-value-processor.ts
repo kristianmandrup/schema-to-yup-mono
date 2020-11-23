@@ -1,12 +1,15 @@
 import { Loggable } from "@schema-to-yup/core";
 
 export class TypeValueProcessor extends Loggable {
-  constructor(handler, opts = {}) {
-    super(opts.config);
+  handler: any;
+  private _value: any;
+
+  constructor(handler, config = {}) {
+    super(config);
     this.handler = handler;
   }
 
-  get modeSelector() {
+  get typeModeSelector() {
     return this.handler.typeModeSelector;
   }
 
@@ -14,11 +17,11 @@ export class TypeValueProcessor extends Loggable {
     return this.handler.mixed;
   }
 
-  get disabledMode(mode) {
+  disabledMode(mode) {
     return this.typeModeSelector.disabledMode(mode);
   }
 
-  get isRequired(value) {
+  isRequired(value) {
     return this.mixed.isRequired(value);
   }
 

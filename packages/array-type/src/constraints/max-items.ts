@@ -3,8 +3,9 @@ import { BaseItems } from "./base-items";
 export const maxItems = (handler, opts) => new MaxItems(handler, opts);
 
 export class MaxItems extends BaseItems {
-  constructor(handler, opts = {}) {
-    super(handler, opts);
+  constructor(handler, opts: any = {}) {
+    super(opts.config);
+    this.handler = handler;
   }
 
   process() {
