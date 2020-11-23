@@ -4,7 +4,6 @@ export class BaseTypeConstraintsProcessor extends Loggable {
   handler: any;
   constraintsMap: any;
   factories: any;
-  maps: any;
   opts: any;
 
   constructor(handler, opts: any = {}) {
@@ -12,6 +11,10 @@ export class BaseTypeConstraintsProcessor extends Loggable {
     this.opts = opts;
     this.handler = handler;
     this.handler.normalize();
+  }
+
+  get maps(): any {
+    return {};
   }
 
   get constraints() {

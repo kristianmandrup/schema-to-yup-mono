@@ -56,10 +56,4 @@ class YupNumber extends YupBaseType {
   }
 }
 
-export {
-  toYupNumberSchemaEntry,
-  YupNumber,
-  createNumberGuard,
-  NumberGuard,
-  createRangeConstraint,
-};
+export { toYupNumberSchemaEntry, YupNumber, createNumberGuard, NumberGuard };

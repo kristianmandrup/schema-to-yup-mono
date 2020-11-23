@@ -1,8 +1,8 @@
 import { YupBaseType } from "@schema-to-yup/base-type";
-import { DateHandler } from "./handler";
+import { DateGuard } from "./guard";
 
 export function toYupDate(obj, config = {}) {
-  return obj && new DateHandler(config).handle(obj);
+  return obj && new DateGuard(obj, config).handle();
 }
 
 export class YupDate extends YupBaseType {

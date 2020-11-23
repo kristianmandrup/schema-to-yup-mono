@@ -1,10 +1,9 @@
-import { MixedConstraints } from "../mixed";
-import { ObjectHandler } from "./handler";
+import { ObjectGuard } from "./guard";
 
-export function toYupObject(obj, config = {}) {
-  return obj && new ObjectHandler(config).handle(obj);
-}
+export const toYupObject = (obj, config = {}) => {
+  return obj && new ObjectGuard(obj, config).handle();
+};
 
-export { ObjectHandler };
+export { ObjectGuard };
 export { YupObject } from "./object";
-export * as ObjectConstraints from './constraints'
+export * as ObjectConstraints from "./constraints";

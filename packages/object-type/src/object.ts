@@ -1,12 +1,16 @@
-import { YupBaseType } from "../base-type";
+import { YupBaseType } from "@schema-to-yup/base-type";
 
 // Allow recursive schema
 export class YupObject extends YupBaseType {
+  properties: any;
+
   constructor(obj) {
     super(obj);
-    this.type = "object";
-    this.base = this.yup.object();
     this.properties = this.value.properties;
+  }
+
+  get yupType() {
+    return "object";
   }
 
   static create(obj) {

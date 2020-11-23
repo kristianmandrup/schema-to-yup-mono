@@ -1,10 +1,8 @@
-import { StringHandler } from "./handler";
-export * as StringConstraints from './constraints'
+import { StringGuard } from "./guard";
+export * as StringConstraints from "./constraints";
 
-export function toYupString(obj, config = {}) {
-  return obj && new StringHandler(config).handle(obj);
-}
+export const toYupString = (obj, config = {}) => {
+  return obj && new StringGuard(obj, config).handle();
+};
 
 export { YupString } from "./string";
-
-
