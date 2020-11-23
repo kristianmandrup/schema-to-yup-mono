@@ -1,8 +1,15 @@
 import { Loggable } from "@schema-to-yup/core";
 
 export class BaseTypeConstraintsProcessor extends Loggable {
-  constructor(handler, opts = {}) {
+  handler: any;
+  constraintsMap: any;
+  factories: any;
+  maps: any;
+  opts: any;
+
+  constructor(handler, opts: any = {}) {
     super(opts.config);
+    this.opts = opts;
     this.handler = handler;
     this.handler.normalize();
   }
@@ -48,7 +55,7 @@ export class BaseTypeConstraintsProcessor extends Loggable {
   }
 
   process(name) {
-    const processor = createTypeConstraintProcessorFor(name);
+    const processor = this.createTypeConstraintProcessorFor(name);
     processor.process();
   }
 }

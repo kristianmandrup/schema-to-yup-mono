@@ -15,11 +15,13 @@
   ],
   "peerDependencies": {
     "@schema-to-yup/core": "0.0.1",
-    "@schema-to-yup/mixed-type": "0.0.1"
+    "@schema-to-yup/mixed-type": "0.0.1",
+    "@schema-to-yup/types": "0.0.1"
   },
   "devDependencies": {
     "@schema-to-yup/core": "*",
-    "@schema-to-yup/mixed-type": "*"
+    "@schema-to-yup/mixed-type": "*",
+    "@schema-to-yup/types": "*"
   },
   "dependencies": {
     "uniq": "^1.0.1"
