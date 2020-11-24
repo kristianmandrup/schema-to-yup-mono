@@ -4,7 +4,7 @@ class Constraint extends Loggable {
   map: any;
   typer: any;
 
-  constructor(typer, map) {
+  constructor(typer, map?) {
     super(typer.config);
     this.map = map || {};
     this.typer = typer;

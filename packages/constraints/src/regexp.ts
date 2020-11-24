@@ -1,21 +1,21 @@
-import { typeMatcher } from '../_type-matcher';
-import { Constraint } from './base';
+import { Constraint } from "./base";
+import { typeMatcher } from "@schema-to-yup/core";
 
 function createRegExpConstraint(typer, map) {
   return new RegExpConstraint(typer, map);
 }
 
 class RegExpConstraint extends Constraint {
-  constructor(typer, map = {}) {
+  constructor(typer, map?) {
     super(typer, map);
   }
 
   transform(value) {
-    return typeMatcher.toRegExp(value);
+    return this.toRegExp(value);
   }
 
   isValidConstraint(value) {
-    return typeMatcher.isRegExpLike(value);
+    return this.isRegExpLike(value);
   }
 
   toRegExp(value) {
@@ -23,7 +23,7 @@ class RegExpConstraint extends Constraint {
   }
 
   isRegExpLike(value) {
-    return value instanceof RegExp || this.isStringType(value);
+    return value instanceof RegExp || typeMatcher.isStringType(value);
   }
 
   get explainConstraintValidMsg() {
@@ -31,7 +31,4 @@ class RegExpConstraint extends Constraint {
   }
 }
 
-export {
-  createRegExpConstraint,
-  RegExpConstraint
-};
+export { createRegExpConstraint, RegExpConstraint };

@@ -2,12 +2,22 @@ function isObjectType(obj) {
   return obj === Object(obj);
 }
 
-function isStringType(val) {
-  return typeof val === "string";
-}
-
 export class WhenEntry {
-  constructor(whenEntryObj, opts = {}) {
+  opts: any;
+  when: any;
+  key: string;
+  type: string;
+  value: any;
+  schema: any;
+  properties: any;
+  config: any;
+  whenEntryObj: any;
+  whenKeys: any[];
+  keys: string[] = [];
+  whenEntryKeys: any[] = [];
+  whenEntryKeysPresent: any[] = [];
+
+  constructor(whenEntryObj, opts: any = {}) {
     this.whenEntryObj = whenEntryObj;
     const { schema, properties, config, key, keys, when, type } = opts;
     this.schema = schema;
@@ -21,10 +31,10 @@ export class WhenEntry {
 
   keysArePresent(keys) {
     const whenKeys = this.whenKeys;
-    return keys.every(key => !!whenKeys.includes(key));
+    return keys.every((key) => !!whenKeys.includes(key));
   }
 
-  validateAndConfigure(whenEntryObj) {
+  validateAndConfigure(whenEntryObj?) {
     whenEntryObj = whenEntryObj || this.whenEntryObj;
     if (!isObjectType(whenEntryObj)) {
       this.warn(
@@ -75,7 +85,7 @@ export class WhenEntry {
   createValue(entryObj, key) {
     if (typeof entryObj === "string") {
       entryObj = {
-        [entryObj]: true
+        [entryObj]: true,
       };
     }
     if (!isObjectType(entryObj)) {
@@ -84,7 +94,7 @@ export class WhenEntry {
     return {
       key: this.key,
       type: this.type,
-      ...entryObj
+      ...entryObj,
     };
   }
 
@@ -97,7 +107,7 @@ export class WhenEntry {
       key: this.key,
       type: this.type,
       value,
-      config: this.config
+      config: this.config,
     };
   }
 
@@ -107,10 +117,10 @@ export class WhenEntry {
   }
 
   hasKey(keys, findKey) {
-    return keys.find(key => key === findKey);
+    return keys.find((key) => key === findKey);
   }
 
-  checkIs(is, present) {
+  checkIs(is, present?) {
     present = present || this.whenEntryKeysPresent;
     const checked = (is === true && present) || (is === false && !present);
     // const keys = this.whenEntryKeys;
@@ -127,7 +137,7 @@ export class WhenEntry {
   calcEntryObj() {
     // clone
     let whenEntryObj = {
-      ...this.whenEntryObj
+      ...this.whenEntryObj,
     };
 
     const { is } = whenEntryObj;
@@ -147,11 +157,11 @@ export class WhenEntry {
     return this.validateAndConfigure() && this.calcEntryObj();
   }
 
-  warn(msg, value) {
+  warn(msg, value?) {
     console.error("[WhenEntry] WARNING", msg, value);
   }
 
-  error(msg, value) {
+  error(msg, value?) {
     console.error("[WhenEntry] ERROR", msg, value);
     throw msg;
   }

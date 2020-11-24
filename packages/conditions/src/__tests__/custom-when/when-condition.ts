@@ -9,8 +9,17 @@ function isStringType(val) {
 }
 
 class WhenCondition {
-  constructor(opts = {}) {
-    console.log("is this working", opts);
+  opts: any;
+  when: any;
+  key: string;
+  type: string;
+  value: any;
+  schema: any;
+  properties: any;
+  config: any;
+  whenKeys: any[] = [];
+
+  constructor(opts: any = {}) {
     const { type, key, value, when, schema, properties, config } = opts;
     this.opts = opts;
     this.when = when;
@@ -33,7 +42,7 @@ class WhenCondition {
     }
   }
 
-  validateAndConfigure(when) {
+  validateAndConfigure(when?) {
     when = when || this.when;
     if (!isObjectType(when)) {
       this.warn("invalid or missing when constraint", when);
@@ -74,7 +83,7 @@ class WhenCondition {
       key: this.key,
       schema: this.schema,
       properties: this.properties,
-      config: this.config
+      config: this.config,
     };
 
     const { entryObj } = this.createWhenEntry(whenEntryObj, opts);
@@ -102,16 +111,16 @@ class WhenCondition {
     return this.validateAndConfigure() && this.constraintValue;
   }
 
-  warn(msg, value) {
+  warn(msg, value?) {
     console.error("[WhenCondition] WARNING", msg, value);
   }
 
-  error(msg, value) {
+  error(msg, value?) {
     console.error("[WhenCondition] ERROR", msg, value);
     throw msg;
   }
 }
-const createWhenCondition = opts => {
+const createWhenCondition = (opts) => {
   console.log("asddas");
   return new WhenCondition(opts);
 };

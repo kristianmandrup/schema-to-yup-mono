@@ -6,7 +6,9 @@ function createDateConstraint(typer, map) {
 }
 
 class DateConstraint extends Constraint {
-  constructor(typer, map = {}) {
+  helper: any;
+
+  constructor(typer, map?) {
     super(typer, map);
     this.helper = new DateHelpers(typer.opts);
   }

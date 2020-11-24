@@ -11,9 +11,21 @@ export const createWhenEntry = (whenEntry, opts = {}) => {
 };
 
 export class WhenEntry {
-  constructor(whenEntryObj, opts = {}) {
+  opts: any;
+  when: any;
+  key: string;
+  type: string;
+  value: any;
+  schema: any;
+  properties: any;
+  config: any;
+  keys: string[] = [];
+  whenKeys: any[] = [];
+  whenEntryObj: any;
+
+  constructor(whenEntryObj, opts: any = {}) {
     this.whenEntryObj = whenEntryObj;
-    const { schema, properties, config, key, keys, when, type } = opts;
+    const { schema, properties, config, key, when, type } = opts;
     this.schema = schema;
     this.when = when;
     this.properties = properties || {};
@@ -28,7 +40,7 @@ export class WhenEntry {
   //   return keys.every(key => !!whenKeys.includes(key));
   // }
 
-  validateAndConfigure(whenEntryObj) {
+  validateAndConfigure(whenEntryObj?) {
     whenEntryObj = whenEntryObj || this.whenEntryObj;
     if (!isObjectType(whenEntryObj)) {
       this.warn(
@@ -125,7 +137,7 @@ export class WhenEntry {
   //   return checked;
   // }
 
-  whenEntryFor(whenObj, createEntryKey, whenKey) {
+  whenEntryFor(whenObj, createEntryKey, whenKey?) {
     whenKey = whenKey || createEntryKey;
 
     if (isStringType(whenObj)) {
@@ -166,11 +178,11 @@ export class WhenEntry {
     return this.validateAndConfigure() && this.calcEntryObj();
   }
 
-  warn(msg, value) {
+  warn(msg, value?) {
     console.error("[WhenEntry] WARNING", msg, value);
   }
 
-  error(msg, value) {
+  error(msg, value?) {
     console.error("[WhenEntry] ERROR", msg, value);
     throw msg;
   }

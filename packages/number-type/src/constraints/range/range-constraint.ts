@@ -1,4 +1,4 @@
-import { NumericConstraint } from '../../../constraints/numeric';
+import { NumericConstraint } from "@schema-to-yup/constraints";
 
 function createRangeConstraint(typer) {
   return new RangeConstraint(typer);
@@ -14,12 +14,9 @@ class RangeConstraint extends NumericConstraint {
       moreThan: ["exclusiveMinimum", "moreThan"],
       lessThan: ["exclusiveMaximum", "lessThan"],
       max: ["maximum", "max"],
-      min: ["minimum", "min"]
+      min: ["minimum", "min"],
     };
   }
 }
 
-export {
-  createRangeConstraint,
-  RangeConstraint
-};
+export { createRangeConstraint, RangeConstraint };

@@ -1,5 +1,9 @@
 export class IfCondition {
-  constructor(obj: any) {}
+  obj: any;
+
+  constructor(obj: any) {
+    this.obj = obj;
+  }
 
   testIf() {}
 

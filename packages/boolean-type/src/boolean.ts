@@ -2,7 +2,7 @@ import { YupBaseType } from "@schema-to-yup/base-type";
 import { BooleanHandler } from "./handler";
 
 export function toYupBoolean(obj, config = {}) {
-  return obj && new BooleanHandler(config).handle(obj);
+  return obj && new BooleanHandler(obj, config).handle();
 }
 
 export class YupBoolean extends YupBaseType {

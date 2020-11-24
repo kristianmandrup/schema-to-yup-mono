@@ -20,7 +20,8 @@ export const fallBackFnMap = {
   },
 };
 
-export const constraintsFor = (constraints: any, { override }: any) => {
+export const constraintsFor = (constraints: any, opts: any = {}) => {
+  const { override } = opts;
   if (Array.isArray(constraints)) {
     constraints = toConstraintsMap(constraints as any);
   }

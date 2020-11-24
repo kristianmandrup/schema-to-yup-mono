@@ -1,15 +1,16 @@
+import { Guard } from "@schema-to-yup/core";
 import { YupBoolean } from "./boolean";
 
-export class BooleanHandler {
-  constructor(config) {
-    this.config = config;
+export class BooleanHandler extends Guard {
+  constructor(obj, config) {
+    super(obj, config);
   }
 
-  isBoolean(obj) {
-    return this.config.isBoolean(obj);
+  isBoolean() {
+    return this.config.isBoolean(this.obj);
   }
 
-  handle(obj) {
-    return this.isBoolean(obj) && YupBoolean.create(obj).createSchemaEntry();
+  handle() {
+    return this.isBoolean() && YupBoolean.create(this.obj).createSchemaEntry();
   }
 }

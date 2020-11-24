@@ -1,12 +1,12 @@
-import { typeMatcher } from '../_type-matcher';
-import { Constraint } from './base';
+import { Constraint } from "./base";
+import { typeMatcher } from "@schema-to-yup/core";
 
 function createStringConstraint(typer, map) {
   return new StringConstraint(typer, map);
 }
 
 class StringConstraint extends Constraint {
-  constructor(typer, map = {}) {
+  constructor(typer, map?) {
     super(typer, map);
   }
 
@@ -19,7 +19,4 @@ class StringConstraint extends Constraint {
   }
 }
 
-export {
-  createStringConstraint,
-  StringConstraint
-};
+export { createStringConstraint, StringConstraint };

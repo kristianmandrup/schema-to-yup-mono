@@ -1,13 +1,13 @@
-import { Constraint } from '../constraints/base';
-import { typeMatcher } from '../_type-matcher';
+import { Constraint } from "./base";
+import { typeMatcher } from "@schema-to-yup/core";
 
-function createNumericConstraint(typer) {
-  return new NumericConstraint(typer);
+function createNumericConstraint(typer, map) {
+  return new NumericConstraint(typer, map);
 }
 
 class NumericConstraint extends Constraint {
-  constructor(typer) {
-    super(typer);
+  constructor(typer, map?) {
+    super(typer, map);
   }
 
   transform(value) {
@@ -23,7 +23,4 @@ class NumericConstraint extends Constraint {
   }
 }
 
-export {
-  createNumericConstraint,
-  NumericConstraint
-};
+export { createNumericConstraint, NumericConstraint };

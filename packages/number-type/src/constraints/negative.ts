@@ -1,10 +1,10 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
 
-export const negative = (handler, opts) => new Negative(handler, opts)
+export const negative = (handler, opts) => new Negative(handler, opts);
 
 export class Negative extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
   }
 
   process() {
@@ -16,7 +16,5 @@ export class Negative extends BaseTypeConstraint {
     if (negative) return true;
     if (exclusiveMaximum === undefined) return false;
     return exclusiveMaximum === 0;
-  }  
+  }
 }
-
-
