@@ -13,6 +13,14 @@
 
 `find packages -name "\*.js" -exec sh -c 'mv "$1" "${1%.js}.ts"' \_ {} \;`
 
+## Running tests
+
+Use `npx jest` to run tests
+
+`$ npx jest packages/array-type`
+
+Configure jest either via `jest.json` or `jest.config.js` file
+
 ## Packages structure
 
 ## Tools

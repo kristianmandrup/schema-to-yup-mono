@@ -1,9 +1,7 @@
 import jsonSchemaDefaults from "./json-schema";
 import typeDefDefaults from "./type-def";
 
-const defaults = {
+export const defaults = {
   "json-schema": jsonSchemaDefaults,
-  "type-def": typeDefDefaults
+  "type-def": typeDefDefaults,
 };
-
-export default defaults

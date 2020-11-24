@@ -106,15 +106,17 @@ describe("toYupArray", () => {
       const schema = createSchema(arr);
       test("less count", () => {
         const valid = schema.isValidSync({ list: [1, 2] });
-        expect(schema.isValidSync({ list: [1, 2] })).toBeFalsy();
+        expect(valid).toBeFalsy();
       });
 
       test("equal count", () => {
-        expect(schema.isValidSync({ list: [1, 2, 3] })).toBeTruthy();
+        const valid = schema.isValidSync({ list: [1, 2, 3] });
+        expect(valid).toBeTruthy();
       });
 
       test("more count", () => {
-        expect(schema.isValidSync({ list: [1, 2, 3, 4] })).toBeTruthy();
+        const valid = schema.isValidSync({ list: [1, 2, 3, 4] });
+        expect(valid).toBeTruthy();
       });
     });
   });

@@ -4,6 +4,7 @@ const { isObjectType } = typeMatcher;
 
 export * from "./resolver";
 import { createYupSchemaEntry } from "./entry";
+export { createYupSchemaEntry };
 
 function isObject(type: string) {
   return type && type === "object";

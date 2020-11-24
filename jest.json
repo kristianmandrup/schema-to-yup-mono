@@ -11,6 +11,6 @@
     }
   },
   "moduleNameMapper": {
-    "@stereobooster/(.*)$": "<rootDir>/packages/$1"
+    "@schema-to-yup/(.*)$": "<rootDir>/packages/$1"
   }
 }
