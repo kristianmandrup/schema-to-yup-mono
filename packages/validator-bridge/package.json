@@ -15,5 +15,10 @@
   ],
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "uppercamelcase": "^3.0.0",
+    "dashify": "^2.0.0",
+    "uniq": "^1.0.1"
   }
 }

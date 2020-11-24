@@ -9,6 +9,8 @@
   },
   "references": [
     { "path": "../core" },
-    { "path": "../base-type" }
+    { "path": "../base-type" },
+    { "path": "../conditions" },
+    { "path": "../constraints" }
   ]
 }

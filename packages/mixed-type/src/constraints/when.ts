@@ -1,17 +1,25 @@
-import { BaseTypeConstraint } from "../../base-type-constraint";
-import { createWhenCondition } from "../../conditions";
+import { BaseTypeConstraint } from "@schema-to-yup/base-type";
+import { createWhenCondition } from "@schema-to-yup/conditions";
+import { typeMatcher } from "@schema-to-yup/core";
 
-export const when = (handler, opts) => new When(handler, opts)
+export const when = (handler, opts) => new When(handler, opts);
 
 export class When extends BaseTypeConstraint {
   constructor(handler, opts = {}) {
-    super(handler, opts)
+    super(handler, opts);
+  }
+
+  get schema() {
+    return this.handler.schema;
+  }
+
+  get properties() {
+    return this.handler.properties;
   }
 
   process() {
-
     const when = this.constraints.when;
-    if (!isObjectType(when)) return this;
+    if (!typeMatcher.isObjectType(when)) return this;
     const { constraint } = this.createWhenConditionFor(when);
 
     if (!constraint) {
@@ -34,12 +42,12 @@ export class When extends BaseTypeConstraint {
       schema: this.schema,
       properties: this.properties,
       config: this.config,
-      when
+      when,
     };
 
     const $createWhenCondition =
       this.config.createWhenCondition || createWhenCondition;
 
     return $createWhenCondition(opts);
-  } 
+  }
 }

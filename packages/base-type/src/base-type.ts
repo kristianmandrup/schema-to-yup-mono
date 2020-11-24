@@ -2,14 +2,12 @@ import { Converter } from "@schema-to-yup/base-type/src/converter";
 import { TypeModeSelector } from "./type-mode-selector";
 import { TypeValueProcessor } from "./type-value-processor";
 import { TypeErrorHandler } from "./type-error-handler";
-import { YupMixed } from "@schema-to-yup/mixed-type";
 import { Base } from "@schema-to-yup/core";
 import * as yup from "yup";
 
 const defaults = {
   classMap: {
     Converter,
-    YupMixed,
     TypeModeSelector,
     TypeValueProcessor,
     TypeErrorHandler,
@@ -41,8 +39,16 @@ export class YupBaseType extends Base {
     this.init();
   }
 
+  get types() {
+    return this.config.types;
+  }
+
   get yupType() {
     return "mixed";
+  }
+
+  get mixedType() {
+    return this.types.mixed;
   }
 
   setTypeInstance(inst) {

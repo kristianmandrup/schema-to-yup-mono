@@ -1,4 +1,4 @@
-import defaults from "./defaults";
+import { defaults } from "./defaults";
 import { Loggable } from "./loggable";
 import { typeMatcher } from "./type-matcher";
 
