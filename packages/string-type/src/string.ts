@@ -1,4 +1,10 @@
 import { YupBaseType } from "@schema-to-yup/base-type";
+import { StringGuard as Guard } from "./guard";
+
+export const toYup = (obj, config = {}) => {
+  return obj && new Guard(obj, config).handle();
+};
+export { Guard };
 
 export class YupString extends YupBaseType {
   constructor(obj) {

@@ -1,18 +1,20 @@
-import {
-  Base,
-  toYupString,
-  toYupNumberSchemaEntry,
-  toYupBoolean,
-  toYupArray,
-  toYupObject,
-  toYupDate,
-} from "@schema-to-yup/types";
+import { Base, typeMatcher } from "@schema-to-yup/core";
 
 import { createPropertyValueResolver } from "../resolver";
 
-class YupSchemaEntryError extends Error {}
+export class YupSchemaEntryError extends Error {}
 
-class YupSchemaEntry extends Base {
+export class YupSchemaEntry extends Base {
+  schema: any;
+  name: string;
+  key: string;
+  value: any;
+  kind: string;
+  type: string;
+  typeHandlers: any;
+
+  propertyValueHandler: any;
+
   constructor(opts) {
     super(opts.config);
     const { schema, name, key, value, config } = opts;
@@ -27,6 +29,10 @@ class YupSchemaEntry extends Base {
     this.type = type;
     this.setTypeHandlers();
     this.setPropertyHandler();
+  }
+
+  get types() {
+    return this.config.types;
   }
 
   setPropertyHandler() {
@@ -50,18 +56,11 @@ class YupSchemaEntry extends Base {
   }
 
   get defaultTypeHandlerMap() {
-    return {
-      string: toYupString,
-      number: toYupNumberSchemaEntry,
-      boolean: toYupBoolean,
-      array: toYupArray,
-      object: toYupObject,
-      date: toYupDate,
-    };
+    return this.types;
   }
 
   setTypeHandlers() {
-    this.types = {
+    this.typeHandlers = {
       ...this.defaultTypeHandlerMap,
       ...(this.config.typeHandlers || {}),
     };
@@ -69,10 +68,10 @@ class YupSchemaEntry extends Base {
 
   isValidSchema() {
     const { type } = this;
-    return this.isStringType(type);
+    return typeMatcher.isStringType(type);
   }
 
-  error(msg, data) {
+  error(msg, data?) {
     const { opts } = this;
     data ? console.error(msg, data, ...opts) : console.error(msg, ...opts);
     throw new YupSchemaEntryError(msg);
@@ -91,5 +90,3 @@ class YupSchemaEntry extends Base {
     return this.propertyValueHandler.resolve(opts, config);
   }
 }
-
-export { YupSchemaEntryError, YupSchemaEntry, Base };

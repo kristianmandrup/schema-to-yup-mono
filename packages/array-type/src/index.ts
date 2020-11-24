@@ -5,4 +5,4 @@ export function toYupArray(obj, config = {}) {
 }
 
 export { YupArray } from "./array";
-export * as ArrayConstraints from "./constraints";
+export * as constraints from "./constraints";

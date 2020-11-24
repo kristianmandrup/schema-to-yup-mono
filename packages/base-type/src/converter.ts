@@ -1,7 +1,6 @@
 import uniq from "uniq";
 import { Base } from "@schema-to-yup/core";
 import { ConstraintsAdder } from "./constraints-adder";
-import { constraintsMap } from "./constraints-map";
 
 const defaults = {
   classMap: {
@@ -13,23 +12,21 @@ export class Converter extends Base {
   handler: any;
   constraintsAdder: any;
   mixed: any;
+  types: any;
+  constraintsMap: any;
 
   constructor(handler, opts: any = {}) {
     super(opts);
     this.handler = handler;
     this.constraintsAdder = this.createConstraintsAdder(opts);
     this.init();
+    const { types } = this.config;
+    this.types = types;
+    this.constraintsMap = types.constraints || {};
   }
 
   get mixedEnabled() {
     return this.mixed.typesEnabled;
-  }
-
-  get constraintsMap() {
-    return {
-      ...constraintsMap,
-      ...(this.config.constraintsMap || {}),
-    };
   }
 
   get typeEnabled() {

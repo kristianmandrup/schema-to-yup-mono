@@ -1,3 +1,2 @@
-export * as NumberConstraints from './constraints'
-export { YupNumber, toYupNumber } from "./number";
-
+export * from "./number";
+export * as constraints from "./constraints";

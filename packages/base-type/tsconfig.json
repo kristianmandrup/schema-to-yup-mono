@@ -9,7 +9,6 @@
   },
   "references": [
     { "path": "../core" },
-    { "path": "../mixed-type" },
-    { "path": "../types" }
+    { "path": "../mixed-type" }
   ]
 }

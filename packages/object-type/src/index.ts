@@ -6,4 +6,4 @@ export const toYupObject = (obj, config = {}) => {
 
 export { ObjectGuard };
 export { YupObject } from "./object";
-export * as ObjectConstraints from "./constraints";
+export * as constraints from "./constraints";
