@@ -13,6 +13,12 @@
   "files": [
     "lib"
   ],
+  "dependencies": {
+    "@schema-to-yup/core": "0.0.1"
+  },
+  "devDependencies": {
+    "@schema-to-yup/core": "*"
+  },
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"
   }

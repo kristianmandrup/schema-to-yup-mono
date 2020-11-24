@@ -1,4 +1,4 @@
-import { Loggable } from "../loggable";
+import { Loggable } from "./loggable";
 
 export class ErrorMessageHandler extends Loggable {
   typeHandler: any;

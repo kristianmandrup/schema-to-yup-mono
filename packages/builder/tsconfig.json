@@ -1,5 +1,5 @@
 {
-  "include": ["src", "../core/src/error", "../base-type/src/constraint-builder.ts"],
+  "include": ["src", "../core/src/error", "../base-type/src/constraint-builder.ts", "../core/src/error-message-handler.ts"],
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "lib",

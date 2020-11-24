@@ -7,7 +7,17 @@ export const createWhenCondition = (opts) => {
 };
 
 export class WhenCondition {
-  constructor(opts = {}) {
+  opts: any;
+  when: any;
+  key: string;
+  type: string;
+  value: any;
+  schema: any;
+  properties: any;
+  config: any;
+  whenKeys: any[] = [];
+
+  constructor(opts: any = {}) {
     const { type, key, value, when, schema, properties, config } = opts;
     this.opts = opts;
     this.when = when;
@@ -30,7 +40,7 @@ export class WhenCondition {
     }
   }
 
-  validateAndConfigure(when) {
+  validateAndConfigure(when?) {
     when = when || this.when;
     if (!isObjectType(when)) {
       this.warn("invalid or missing when constraint", when);
@@ -99,7 +109,7 @@ export class WhenCondition {
     return this.validateAndConfigure() && this.constraintValue;
   }
 
-  warn(msg, value) {
+  warn(msg, value?) {
     console.error("[WhenCondition] WARNING", msg, value);
   }
 
