@@ -1,4 +1,4 @@
-const { buildYup } = require("../src");
+import { buildYup } from "..";
 
 var yup = require("yup");
 
@@ -6,7 +6,7 @@ var yup = require("yup");
 describe("yup schema validation", () => {
   const name = yup.string().required();
   const shapeConfig = {
-    name
+    name,
   };
   const schema = yup.object().shape(shapeConfig);
 
@@ -29,9 +29,9 @@ describe("name schema", () => {
     properties: {
       name: {
         type: "string",
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   };
 
   const schema = buildYup(nameJsonSchema);
@@ -52,23 +52,23 @@ test("converts JSON schema to Yup Schema and validates", async () => {
     properties: {
       name: {
         description: "Name of the person",
-        type: "string"
+        type: "string",
       },
       age: {
         description: "Age of person",
         type: "number",
         exclusiveMinimum: 0,
-        required: true
+        required: true,
       },
       peopleType: {
         enum: ["good", "bad"],
         enum_titles: ["Good", "Bad"],
         type: "string",
         title: "Type of people",
-        propertyOrder: 4
-      }
+        propertyOrder: 4,
+      },
     },
-    required: ["name"]
+    required: ["name"],
   };
 
   const errMessages = {};

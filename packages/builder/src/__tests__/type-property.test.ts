@@ -1,4 +1,4 @@
-const { buildYup } = require("../src");
+import { buildYup } from "..";
 
 describe.skip("models schema", () => {
   const modelsJsonSchema = {
@@ -7,13 +7,13 @@ describe.skip("models schema", () => {
     properties: {
       name: {
         type: "string",
-        required: true
+        required: true,
       },
       type: {
         type: "string",
-        required: true
-      }
-    }
+        required: true,
+      },
+    },
   };
 
   const schema = buildYup(modelsJsonSchema);

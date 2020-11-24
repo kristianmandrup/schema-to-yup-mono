@@ -3,6 +3,14 @@ import { Base } from "@schema-to-yup/core";
 export class PropertyValueResolverError extends Error {}
 
 export class BasePropertyValueResolver extends Base {
+  kind: string;
+  value: any;
+  schema: any;
+  key: string;
+  name: string;
+  type: string;
+  types: any;
+
   constructor(opts, config) {
     super(config);
     const { value, type, kind, name, key, schema, types } = opts;

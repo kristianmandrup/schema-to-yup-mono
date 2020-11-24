@@ -1,0 +1,30 @@
+{
+  "name": "@schema-to-yup/builder",
+  "version": "0.0.1",
+  "description": "d",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "repository": "",
+  "author": "Kristian Mandrup <kmandrup@gmail.com>",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib"
+  ],
+  "peerDependencies": {
+    "@schema-to-yup/builder": "0.0.1",
+    "@schema-to-yup/conditions": "0.0.1"        
+  },
+  "devDependencies": {
+    "@schema-to-yup/builder": "*",
+    "@schema-to-yup/conditions": "*"    
+  },
+  "scripts": {
+    "start": "tsc -w --preserveWatchOutput"
+  },
+  "dependencies": {
+    "yup": "^0.30.0"
+  }
+}

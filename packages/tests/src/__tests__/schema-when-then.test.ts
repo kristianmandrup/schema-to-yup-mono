@@ -1,8 +1,8 @@
 import * as yup from "yup";
-import { createWhenCondition } from "./custom-when";
-const { buildYup } = require("../src");
+import { createWhenCondition } from "@schema-to-yup/conditions";
+import { buildYup } from "@schema-to-yup/builder";
 
-const createValidTester = schema => {
+const createValidTester = (schema) => {
   return (json, expectedResult) => {
     const valid = schema.isValidSync(json);
     expect(valid).toBe(expectedResult);
@@ -13,12 +13,12 @@ describe("when", () => {
   const bigJson = {
     valid: {
       isBig: true,
-      count: 5
+      count: 5,
     },
     invalid: {
       isBig: true,
-      count: 4
-    }
+      count: 4,
+    },
   };
 
   describe("manual then", () => {
@@ -27,8 +27,8 @@ describe("when", () => {
         isBig: yup.boolean(),
         count: yup.number().when("isBig", {
           is: true, // alternatively: (val) => val == true
-          then: yup.number().min(5)
-        })
+          then: yup.number().min(5),
+        }),
       });
 
       const tester = createValidTester(yupSchema);
@@ -49,7 +49,7 @@ describe("when", () => {
       type: "object",
       properties: {
         isBig: {
-          type: "boolean"
+          type: "boolean",
         },
         count: {
           type: "number",
@@ -57,12 +57,12 @@ describe("when", () => {
             isBig: {
               is: true,
               then: {
-                min: 5
-              }
-            }
-          }
-        }
-      }
+                min: 5,
+              },
+            },
+          },
+        },
+      },
     };
 
     const yupSchema = buildYup(biggyjson);
@@ -83,7 +83,7 @@ describe("when", () => {
       type: "object",
       properties: {
         isBig: {
-          type: "boolean"
+          type: "boolean",
         },
         count: {
           type: "number",
@@ -91,12 +91,12 @@ describe("when", () => {
             isBig: {
               is: true,
               then: {
-                min: 5
-              }
-            }
-          }
-        }
-      }
+                min: 5,
+              },
+            },
+          },
+        },
+      },
     };
 
     const yupSchema = buildYup(biggyjson, { createWhenCondition });
@@ -117,28 +117,28 @@ describe("when", () => {
       type: "object",
       properties: {
         name: {
-          type: "string"
+          type: "string",
         },
         age: {
           type: "number",
           when: {
             name: {
               is: true,
-              then: "required"
-            }
-          }
-        }
-      }
+              then: "required",
+            },
+          },
+        },
+      },
     };
 
     const json = {
       valid: {
         name: "mike",
-        age: 32
+        age: 32,
       },
       invalid: {
-        name: "mike"
-      }
+        name: "mike",
+      },
     };
 
     const yupSchema = buildYup(nameCountjson);

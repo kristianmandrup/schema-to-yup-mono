@@ -8,7 +8,10 @@
   },
   "references": [
     {
-      "path": "../core"
+      "path": "../builder"
+    },
+    {
+      "path": "../conditions"
     }
   ]
 }

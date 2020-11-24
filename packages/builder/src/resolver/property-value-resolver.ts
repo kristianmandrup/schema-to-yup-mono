@@ -7,6 +7,9 @@ export const createPropertyValueResolver = (opts, config) => {
 };
 
 export class PropertyValueResolver extends BasePropertyValueResolver {
+  multiTypeResolver: any;
+  singleTypeResolver: any;
+
   constructor(opts, config) {
     super(opts, config);
     this.initResolvers();

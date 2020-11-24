@@ -1,12 +1,11 @@
-const { buildYup } = require("../src");
-
-var yup = require("yup");
+import { buildYup } from "..";
+import * as yup from "yup";
 
 //check validity
 describe("yup multi type schema validation", () => {
   const name = yup.string().required();
   const shapeConfig = {
-    name
+    name,
   };
   const schema = yup.object().shape(shapeConfig);
 
@@ -28,8 +27,8 @@ describe("multi type JSON schema", () => {
       title: "models",
       type: "object",
       properties: {
-        name: ["string", "null"]
-      }
+        name: ["string", "null"],
+      },
     };
 
     const schema = buildYup(modelsJsonSchema);
@@ -64,21 +63,24 @@ describe("multi type JSON schema", () => {
       title: "models",
       type: "object",
       properties: {
-        name: [{
-          type: "string",
-          minLength: 2
-        }, {
-          type: "string",
-          pattern: '[a-zA-Z_]+'          
-        }]
-      }
+        name: [
+          {
+            type: "string",
+            minLength: 2,
+          },
+          {
+            type: "string",
+            pattern: "[a-zA-Z_]+",
+          },
+        ],
+      },
     };
 
     const schema = buildYup(modelsJsonSchema);
 
     describe("valid", () => {
       test("name length 2", async () => {
-        const valid = schema.isValidSync({ name: '12' });
+        const valid = schema.isValidSync({ name: "12" });
         expect(valid).toBe(true);
       });
 
@@ -95,10 +97,9 @@ describe("multi type JSON schema", () => {
       });
 
       test("name is empty string", async () => {
-        const valid = schema.isValidSync({ name: '' });
+        const valid = schema.isValidSync({ name: "" });
         expect(valid).toBe(false);
       });
     });
-  });
   });
 });

@@ -1,6 +1,6 @@
 // additionalProperties: https://github.com/kristianmandrup/schema-to-yup/issues/55
 
-const { buildYup } = require("../src");
+import { buildYup } from "..";
 
 describe.skip("models schema", () => {
   const modelsJsonSchema = {
@@ -9,14 +9,14 @@ describe.skip("models schema", () => {
     properties: {
       name: {
         type: "string",
-        required: true
+        required: true,
       },
       type: {
         type: "string",
-        required: true
-      }
+        required: true,
+      },
     },
-    additionalProperties: { type: "string" }
+    additionalProperties: { type: "string" },
   };
 
   const schema = buildYup(modelsJsonSchema);
@@ -26,7 +26,7 @@ describe.skip("models schema", () => {
       type: "Person",
       name: "Administrator",
       level: 3, // invalid,
-      color: "blue" // valid
+      color: "blue", // valid
     });
     expect(valid).toBe(false);
   });
