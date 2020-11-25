@@ -1,165 +1,178 @@
-# Typescript monorepo for React project
+# schema-to-yup
 
-## What I want to achieve?
+This is a revision of `schema-to-yup` using a monorepo approach.
 
-- [Monorepo](https://www.atlassian.com/git/tutorials/monorepos) project, to be able to comfortably to develop several packages, which can be used separately but as well together
-- Typescript
-- Testing library. I want to start with Jest, but as well we can choose something else
-- (nice to have, but optional) ESlint with [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)
-- (nice to have, but optional) Rollup to bundle and minify
-- (nice to have, but optional) pre-commit hooks with prettier
+This library can be used to build a [Yup]() schema from a JSON Schema, GraphQL schema (type definition) or any other similar type/class and field/properties model or schema :)
 
-## Rename js to ts in ./packages recursively
+## Installation
 
-`find packages -name "\*.js" -exec sh -c 'mv "$1" "${1%.js}.ts"' \_ {} \;`
+`yarn add @schema-to-yup/builder @schema-to-yup/types`
 
-## Running tests
+## Documentation
 
-Use `npx jest` to run tests
+- [Customization](./docs/Customization.md)
+- [Schemas](./docs/Schemas.md)
+- [Type handlers](./docs/Types.md)
+- [Conditional logic](./docs/Conditions.md)
+- [Examples](./docs/Examples.md)
+- [Development](./docs/Development.md)
+- [Legacy readme](./docs/Readme-Legacy.md)
 
-`$ npx jest packages/array-type`
+## Usage
 
-Configure jest either via `jest.json` or `jest.config.js` file
+The type handlers have been completely decoupled from the builder.
 
-## Packages structure
+You can choose to:
 
-## Tools
+- use the default set of type handlers
+- use your own or any combination/mix
 
-### yarn
+This should make it much easier to customize the internals to fit your needs and allow the community an easy path to provide extensions.
 
-`yarn` instead of `npm`, because it supports `workspaces` to link cross-dependencies.
+## Quick start
 
-Create `package.json` in the root without version because we not going to publish it and with `workspaces`:
+```ts
+import { types } from "@schema-to-yup/types";
+import { createBuilder } from "@schema-to-yup/builder";
 
-```json
-"workspaces": [
-  "packages/*"
-]
+const builder = createBuilder({ types });
+const jsonSchema = {
+  // ...
+};
+
+// builds yup schema from a JSON or GraphQL schema
+const yupSchema = builder.build(jsonSchema);
 ```
 
-### lerna
+This would generate the following Yup validation schema:
 
-We will use `lerna` to run commands across all packages and "elevate" common dependencies.
-
-Create `lerna.json`:
-
-```json
-{
-  "packages": ["packages/*"],
-  "npmClient": "yarn",
-  "useWorkspaces": true,
-  "version": "0.0.1"
-}
+```js
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  age: yup.number().required().positive(),
+});
 ```
 
-### TypeScript
+### Async validation
 
-We will use `typescript` to check types and compile TS down to desired JS files (ES5 or ES2015, CommonJS or ES modules).
-
-Create `tsconfig.base.json`. This is what you need to add to enable monorepo:
-
-```json
-{
-  "include": ["packages/*/src"],
-  "compilerOptions": {
-    "declaration": true,
-    "declarationMap": true,
-    "baseUrl": ".",
-    "paths": {
-      "@stereobooster/*": ["packages/*/src"]
-    }
-  }
-}
+```ts
+const valid = await yupSchema.isValid({
+  name: "jimmy",
+  age: 24,
+});
 ```
 
-Create `packages/d/`, `packages/b/`, `packages/c/`, `packages/stories/`. Add `tsconfig.json` to each one:
+### Sync yup validation
 
-```json
-{
-  "include": ["src"],
-  "extends": "../../tsconfig.base.json",
-  "compilerOptions": {
-    // to override config from tsconfig.base.json
-    "outDir": "lib",
-    "rootDir": "src",
-    // for references
-    "baseUrl": "src"
+```ts
+const valid = schema.isValidSync({
+  type: "Person",
+  name: "Administrator",
+  level: 3,
+  color: "blue",
+});
+```
+
+## Advanced usage guide
+
+- [References](#Refs)
+- [Runtime Mode](#Mode)
+- [Shape](#Shape)
+
+### Refs
+
+Please note that this library does not currently resolve `$ref` (JSON Pointers) out of the box. You can use another library for that.
+
+You could f.ex use [json-schema-ref-parser](https://www.npmjs.com/package/json-schema-ref-parser) to preprocess your schema. Also see:
+
+- [schema-deref](https://www.npmjs.com/package/schema-deref)
+- [jsonref](https://www.npmjs.com/package/jsonref)
+
+### Runtime Mode
+
+By default, any property will be explicitly `notRequired` unless set to be required, either via `required: true` in the property constraint object or via the `required` list of properties of the `object` schema definition (of the property).
+
+You can override the `notRequired` behavior by setting it on the new `mode` object of the configuration which can be used to control and fine-tune runtime behaviour.
+
+```js
+const jsonSchema = {
+  title: "users",
+  type: "object",
+  properties: {
+    username: { type: "string" },
   },
-  // references required for monorepo to work
-  "references": [{ "path": "../d" }]
-}
+};
 ```
 
-In `package.json` for packages `b` and `c` add:
+### Mode examples
 
-```json
-"peerDependencies": {
-  "@stereobooster/d": "0.0.1"
-},
-"devDependencies": {
-  "@stereobooster/d": "*"
-}
-```
-
-We need `peerDependencies` to make sure that when packages (`d`, `b`, `c`) installed by the end user they will use the same instance of package `d`, otherwise, TypeScript can complain about incompatible types (especially if use inheritance and private fields). In `peerDependencies` we specify a version, but in `devDependencies` we don't need to, because we need simply to instruct `yarn` to use whatever version of package we have locally.
-
-Now we can build projects. Add to root `package.json`:
-
-```json
-"scripts": {
-  "build": "lerna run build --stream --scope=@stereobooster/{d,b,c}"
-}
-```
-
-and to `package.json` for `d`, `b`, `c`
-
-```json
-"scripts": {
-  "build": "tsc"
-}
-```
-
-### Jest
-
-We will use `jest` to run tests. Install `@types/jest`, `@types/react-test-renderer`, `jest`, `react-test-renderer`. Add `jest.json`. To eanbale TypeScript:
-
-```json
-{
-  "moduleFileExtensions": ["ts", "tsx", "js"],
-  "transform": {
-    "\\.tsx?$": "ts-jest"
+```js
+const yupSchema = buildYup(jsonSchema, {
+  mode: {
+    notRequired: true, // default setting
   },
-  "testMatch": ["**/__tests__/**/*.test.*"],
-  "globals": {
-    "ts-jest": {
-      "tsConfig": "tsconfig.base.json"
-    }
-  }
-}
+});
+
+// will be valid since username is not required by default
+const valid = yupSchema.validateSync({
+  foo: "dfds",
+});
 ```
 
-to enable monorepo:
+```js
+const yupSchema = buildYup(jsonSchema, {
+  mode: {
+    notRequired: false,
+  },
+});
 
-```json
-"moduleNameMapper": {
-  "@stereobooster/(.*)$": "<rootDir>/packages/$1"
-}
+// will be invalid since username is required by default when notRequired mode is disabled
+const valid = yupSchema.validateSync({
+  foo: "dfds",
+});
 ```
 
-As well we will need to change `tsconfig.base.json`, because [Jest doesn't support ES modules](https://github.com/facebook/jest/issues/4842):
+### Shape
 
-```json
-"compilerOptions": {
-  "target": "es5",
-  "module": "commonjs",
-}
+You can access the internal Yup shape, via `shapeConfig` on the yup schema returned by the `buildYup` schema builder function.
+This allows you to easily mix and match to suit more advanced requirements.
+
+```js
+const { buildYup } = require("json-schema-to-yup");
+const { shapeConfig } = buildYup(json, config);
+const schema = yup.object().shape({
+  ...shapeConfig,
+  ...customShapeConfig,
+});
 ```
 
-Add command to `package.json`
+## Similar projects
 
-```json
-"scripts": {
-  "pretest": "yarn build",
-  "test": "jest --config=jest.json"
-}
-```
+- [JSON schema to Elastic Search mapping](https://github.com/kristianmandrup/json-schema-to-es-mapping)
+- [JSON Schema to GraphQL types with decorators/directives](https://github.com/kristianmandrup/json-schema-to-graphql-types-decorated)
+- [JSON Schema to Mongoose schema](https://github.com/kristianmandrup/convert-json-schema-to-mongoose)
+- [JSON Schema to MobX State Tree types](https://github.com/ralusek/jsonschema-to-mobx-state-tree)
+- [Convert JSON schema to mongoose 5 schema](https://github.com/kristianmandrup/convert-json-schema-to-mongoose)
+
+The library [JSON Schema model builder](https://github.com/kristianmandrup/json-schema-model-builder#readme) is a powerful toolset to build a framework to create any kind of output model from a JSON schema.
+
+If you enjoy this declarative/generator approach, try it out!
+
+## Testing
+
+Uses [jest](jestjs.io/) for unit testing.
+
+- Have unit tests that cover most of the constraints supported.
+- Please help add more test coverage and help refactor to make this lib even more awesome :)
+
+## Ideas and suggestions
+
+Please feel free to come with ideas and suggestions on how to further improve this library.
+
+## Author
+
+2018-2021 Kristian Mandrup
+
+## License
+
+MIT
