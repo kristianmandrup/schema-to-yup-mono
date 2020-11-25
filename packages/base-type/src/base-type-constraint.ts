@@ -11,6 +11,10 @@ export class BaseTypeConstraint extends Base {
     this.errorHandler = handler.errorHandler || this.createTypeErrorHandler();
   }
 
+  setTypeInst(inst) {
+    this.handler.setTypeInst(inst);
+  }
+
   get yup() {
     return this.handler.yup;
   }

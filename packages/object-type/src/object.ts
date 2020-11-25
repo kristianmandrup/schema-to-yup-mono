@@ -1,4 +1,9 @@
 import { YupBaseType } from "@schema-to-yup/base-type";
+import { ObjectGuard } from "./guard";
+
+export const toYupObject = (obj, config = {}) => {
+  return obj && new ObjectGuard(obj, config).handle();
+};
 
 // Allow recursive schema
 export class YupObject extends YupBaseType {

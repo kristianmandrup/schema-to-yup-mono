@@ -1,5 +1,7 @@
 {
-  "include": ["src", "../core/src/error", "../base-type/src/constraint-builder.ts", "../tests/src/__tests__/schema-if-then-else.test.ts", "../core/src/error-message-handler.ts"],
+  "include": [
+    "src"
+  ],
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "outDir": "lib",

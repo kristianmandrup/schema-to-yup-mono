@@ -6,7 +6,7 @@ export class Processor extends BaseTypeConstraintsProcessor {
     super(opts);
   }
 
-  maps() {
+  get maps() {
     return {
       factories,
       classMap,

@@ -1,16 +1,16 @@
-import { createObjectHandler, schema, dogSchema, buildYup } from "./_helpers";
+import { createObjectGuard, schema, dogSchema, buildYup } from "./helpers";
 
 describe("ObjectHandler", () => {
-  describe("createObjectHandler", () => {
+  describe("createObjectGuard", () => {
     describe("config object - null", () => {
       test("creates using empty config", () => {
-        expect(createObjectHandler(null)).toBeTruthy();
+        expect(createObjectGuard(null)).toBeTruthy();
       });
     });
 
     describe("config object", () => {
       test("creates using config", () => {
-        expect(createObjectHandler({ x: 2 })).toBeTruthy();
+        expect(createObjectGuard({ x: 2 })).toBeTruthy();
       });
     });
   });
@@ -18,23 +18,23 @@ describe("ObjectHandler", () => {
   describe("instance", () => {
     describe("handle", () => {
       describe("recursive object schema", () => {
-        const instance = createObjectHandler({ schema, buildYup });
+        const instance = createObjectGuard({ schema, buildYup });
         const obj = {
           key: "dog",
           type: "object",
           schema,
-          value: dogSchema
+          value: dogSchema,
         };
-        const dogYupSchema = instance.handle(obj);
+        const dogYupSchema = instance.handle();
 
         const dog = {
           valid: {
             name: "Spot",
-            age: 1
+            age: 1,
           },
           invalid: {
-            age: "x"
-          }
+            age: "x",
+          },
         };
 
         test("valid dog", () => {

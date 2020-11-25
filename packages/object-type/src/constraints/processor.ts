@@ -1,16 +1,16 @@
-import { BaseTypeConstraintsProcessor } from '../../base-type-constraints-processor'
-import { factories, classMap, constraints } from './maps'
+import { BaseTypeConstraintsProcessor } from "@schema-to-yup/base-type";
+import { factories, classMap, constraints } from "./maps";
 
 export class Processor extends BaseTypeConstraintsProcessor {
   constructor(opts = {}) {
-    super(opts)
+    super(opts);
   }
 
-  maps() {
+  get maps() {
     return {
-      factories, 
-      classMap, 
-      constraints
-    }
+      factories,
+      classMap,
+      constraints,
+    };
   }
 }

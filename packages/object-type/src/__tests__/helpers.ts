@@ -1,10 +1,10 @@
-import { toYupObject, createObjectHandler } from "@schema-to-yup/object-type";
+import { toYupObject, createObjectGuard } from "..";
 import { buildYup } from "@schema-to-yup/builder";
 
 const isObject = (fieldDef) => fieldDef && fieldDef.type === "object";
 const config = { isObject };
 
-export { buildYup, createObjectHandler };
+export { buildYup, createObjectGuard };
 
 export const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;

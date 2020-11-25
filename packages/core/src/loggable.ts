@@ -18,10 +18,10 @@ export class Loggable {
     return JSON.stringify(data);
   }
 
-  error(errMsg: string, value?: any) {
+  error(errMsg: string, ...values: any) {
     // only disable if directly disabled
     if (this.enable.error === false) return;
-    this.err && (value ? this.err(errMsg, value) : this.err(errMsg));
+    this.err && (values ? this.err(errMsg, ...values) : this.err(errMsg));
     throw errMsg;
   }
 

@@ -45,6 +45,7 @@
     { "path": "packages/object-type" },
     { "path": "packages/string-type" },
     { "path": "packages/types" },
-    { "path": "packages/validator-bridge" }
+    { "path": "packages/validator-bridge" },
+    { "path": "packages/tests" }    
   ]
 }
