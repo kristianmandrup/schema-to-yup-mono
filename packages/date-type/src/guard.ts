@@ -1,5 +1,5 @@
 import { BaseGuard } from "@schema-to-yup/core";
-import { DateType } from "./date";
+import { TypeHandler } from "./date";
 
 export class Guard extends BaseGuard {
   constructor(obj, config) {
@@ -13,7 +13,7 @@ export class Guard extends BaseGuard {
   handle() {
     return (
       this.isDate() &&
-      DateType.create({ ...this.obj, ...this.config }).createSchemaEntry()
+      TypeHandler.create({ ...this.obj, ...this.config }).createSchemaEntry()
     );
   }
 }

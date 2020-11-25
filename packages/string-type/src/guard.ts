@@ -1,5 +1,5 @@
 import { BaseGuard } from "@schema-to-yup/core";
-import { StringType } from "./string";
+import { TypeHandler } from "./string";
 
 export class Guard extends BaseGuard {
   constructor(obj, config = {}) {
@@ -13,7 +13,7 @@ export class Guard extends BaseGuard {
   handle() {
     return (
       this.isString() &&
-      StringType.create({
+      TypeHandler.create({
         ...this.obj,
         config: this.config,
       }).createSchemaEntry()

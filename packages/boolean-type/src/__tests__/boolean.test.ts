@@ -1,20 +1,20 @@
-import { toInstance } from "..";
+import { createTypeHandler } from "..";
 
 const isBoolean = (fieldDef) => fieldDef && fieldDef.type === "boolean";
 const config = { isBoolean };
 const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createBool = (value) => {
   const obj = { value, config, key: "x", type: "boolean" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createBoolNoKey = (value) => {
   const obj = { value, config, type: "boolean" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 describe("boolean: create", () => {

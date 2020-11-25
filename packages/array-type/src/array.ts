@@ -1,16 +1,16 @@
 import { BaseType } from "@schema-to-yup/base-type";
 import { Guard } from "./guard";
 
-export function toInstance(obj, config = {}) {
+export function createTypeHandler(obj, config = {}) {
   return obj && new Guard(obj, config).handle();
 }
 
-export class ArrayType extends BaseType {
+export class TypeHandler extends BaseType {
   createYupSchemaEntry: any;
 
   constructor(obj) {
     super(obj);
-    this.createYupSchemaEntry = this.config.createYupSchemaEntry;
+    this.createSchemaEntry = this.config.createSchemaEntry;
   }
 
   get typeName() {
@@ -18,7 +18,7 @@ export class ArrayType extends BaseType {
   }
 
   static create(obj) {
-    return new ArrayType(obj);
+    return new TypeHandler(obj);
   }
 
   convert() {

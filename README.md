@@ -10,6 +10,7 @@ This library can be used to build a [Yup]() schema from a JSON Schema, GraphQL s
 
 ## Documentation
 
+- [Architecture](./docs/Architecture.md)
 - [Customization](./docs/Customization.md)
 - [Schemas](./docs/Schemas.md)
 - [Type handlers](./docs/Types.md)

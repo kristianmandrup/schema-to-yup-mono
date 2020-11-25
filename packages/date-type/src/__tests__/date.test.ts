@@ -1,23 +1,23 @@
-import { toInstance } from "..";
+import { createTypeHandler } from "..";
 import * as yup from "yup";
 
 const isDate = (fieldDef) => fieldDef && fieldDef.type === "date";
 const config = { isDate };
 const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const oneDay = 86400000;
 
 const createDate = (value) => {
   const obj = { value, config, key: "createdAt", type: "date" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createDateNoKey = (value) => {
   const obj = { value, config, type: "date" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createSchema = (createdAt) => {

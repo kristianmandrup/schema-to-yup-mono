@@ -1,12 +1,12 @@
 import { BaseType } from "@schema-to-yup/base-type";
 import { Guard } from "./guard";
 
-export const toInstance = (obj, config = {}) => {
+export const createTypeHandler = (obj, config = {}) => {
   return obj && new Guard(obj, config).handle();
 };
 
 // Allow recursive schema
-export class ObjectType extends BaseType {
+export class TypeHandler extends BaseType {
   properties: any;
 
   constructor(obj) {
@@ -19,7 +19,7 @@ export class ObjectType extends BaseType {
   }
 
   static create(obj) {
-    return new ObjectType(obj);
+    return new TypeHandler(obj);
   }
 
   get typeEnabled() {

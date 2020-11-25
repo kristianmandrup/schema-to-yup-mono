@@ -1,11 +1,11 @@
 import { BaseType } from "@schema-to-yup/base-type";
 import { Guard } from "./guard";
 
-export function toInstance(obj, config = {}) {
+export function createTypeHandler(obj, config = {}) {
   return obj && new Guard(obj, config).handle();
 }
 
-export class BooleanType extends BaseType {
+export class TypeHandler extends BaseType {
   constructor(obj) {
     super(obj);
   }
@@ -15,6 +15,6 @@ export class BooleanType extends BaseType {
   }
 
   static create(obj) {
-    return new BooleanType(obj);
+    return new TypeHandler(obj);
   }
 }

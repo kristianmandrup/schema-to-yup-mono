@@ -1,4 +1,4 @@
-import { toInstance } from "../";
+import { createTypeHandler } from "../";
 import { createSchemaEntry } from "@schema-to-yup/builder";
 import { defaults } from "@schema-to-yup/core";
 import * as yup from "yup";
@@ -8,17 +8,17 @@ const defaultConfig = { ...defaults, createSchemaEntry };
 const create = (fieldDef, config = {}) => {
   config = Object.assign(defaultConfig, config);
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createArr = (value, config = defaultConfig) => {
   const obj = { value, config, key: "list", type: "array" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createArrNoKey = (value, config = defaultConfig) => {
   const obj = { value, config, type: "array" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 const createSchema = (list) => {

@@ -1,22 +1,22 @@
 import * as yup from "yup";
-import { toInstance } from "..";
+import { createTypeHandler } from "..";
 
 const isString = (fieldDef) => fieldDef && fieldDef.type === "string";
 const config = { isString };
 
 export const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 export const createStr = (value, key = "x") => {
   const obj = { value, config, key, type: "string" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 export const createStrNoKey = (value) => {
   const obj = { value, config, type: "string" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 export const createSchema = (schemaEntry, label = "value") => {

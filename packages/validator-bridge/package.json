@@ -20,5 +20,8 @@
     "uppercamelcase": "^3.0.0",
     "dashify": "^2.0.0",
     "uniq": "^1.0.1"
+  },
+  "devDependencies": {
+    "validator": "^13.1.17"
   }
 }

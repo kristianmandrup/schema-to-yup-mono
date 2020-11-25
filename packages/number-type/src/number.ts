@@ -13,16 +13,16 @@ export function toNumberSchemaEntry(obj, config = {}) {
 }
 
 function buildSchemaEntry(obj) {
-  return NumberType.schemaEntryFor(obj);
+  return TypeHandler.schemaEntryFor(obj);
 }
 
 function buildNumber(obj) {
-  return NumberType.create(obj);
+  return TypeHandler.create(obj);
 }
 
 import { BaseType } from "@schema-to-yup/base-type";
 
-export class NumberType extends BaseType {
+export class TypeHandler extends BaseType {
   constructor(obj) {
     super(obj);
     this.type = this.normalizeNumType(obj.type);
@@ -37,11 +37,11 @@ export class NumberType extends BaseType {
   }
 
   static create(obj) {
-    return new NumberType(obj);
+    return new TypeHandler(obj);
   }
 
   static schemaEntryFor(obj) {
-    return NumberType.create(obj).createSchemaEntry();
+    return TypeHandler.create(obj).createSchemaEntry();
   }
 
   get typeEnabled() {

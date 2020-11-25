@@ -26,13 +26,17 @@ export class Converter extends Base {
     this.ProcessorClazz = this.constraintsMap[this.type].Processor;
   }
 
+  createMixedType() {
+    return this.types.createTypeHandler(this.opts);
+  }
+
   // create or get Mixed
   get mixed() {
-    return this.types.mixed;
+    return this.createMixedType();
   }
 
   convertMixed() {
-    this.mixed.convert();
+    return this.mixed.convert();
   }
 
   get typeEnabled() {
@@ -103,13 +107,7 @@ export class Converter extends Base {
     return new this.ProcessorClazz(this.handler, this.opts);
   }
 
-  rebindMethods() {
-    // rebind: ensure this always mapped correctly no matter context
-    this.rebind("addConstraint", "addValueConstraint");
-  }
-
   convert() {
-    this.rebindMethods();
     this.addMappedConstraints();
     this.convertMixed();
     this.convertEnabled();

@@ -39,6 +39,10 @@ export class SinglePropertyValueResolver extends BasePropertyValueResolver {
   }
 
   resolveTypeHandler(typeHandler, obj, config) {
-    return typeHandler && typeHandler(obj, config);
+    return (
+      typeHandler &&
+      typeHandler.createTypeHandler &&
+      typeHandler.createTypeHandler(obj, config)
+    );
   }
 }

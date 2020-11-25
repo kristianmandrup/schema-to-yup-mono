@@ -1,4 +1,4 @@
-import { ObjectType } from "./object";
+import { TypeHandler } from "./object";
 import { BaseGuard } from "@schema-to-yup/core";
 
 export class Guard extends BaseGuard {
@@ -13,7 +13,7 @@ export class Guard extends BaseGuard {
   handle() {
     return (
       this.isObject() &&
-      ObjectType.create({
+      TypeHandler.create({
         ...this.obj,
         config: this.config,
       }).createSchemaEntry()

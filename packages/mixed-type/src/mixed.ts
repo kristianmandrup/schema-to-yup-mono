@@ -1,9 +1,15 @@
 import { BaseType } from "@schema-to-yup/base-type";
 
-export class MixedType extends BaseType {
+export const createTypeHandler = (opts) => TypeHandler.create(opts);
+
+export class TypeHandler extends BaseType {
   constructor(opts: any = {}) {
     super(opts);
     this.init();
+  }
+
+  static create(opts) {
+    return new TypeHandler(opts);
   }
 
   get typeName() {

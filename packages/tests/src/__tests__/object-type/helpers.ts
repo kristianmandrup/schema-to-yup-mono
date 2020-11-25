@@ -1,4 +1,7 @@
-import { toInstance, createObjectGuard } from "@schema-to-yup/object-type";
+import {
+  createTypeHandler,
+  createObjectGuard,
+} from "@schema-to-yup/object-type";
 import { buildSchema } from "@schema-to-yup/builder";
 
 const isObject = (fieldDef) => fieldDef && fieldDef.type === "object";
@@ -8,17 +11,17 @@ export { buildSchema, createObjectGuard };
 
 export const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 export const createObject = (value) => {
   const obj = { value, config, key: "x", type: "object" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 export const createObjectNoKey = (value) => {
   const obj = { value, config, type: "object" };
-  return toInstance(obj, config);
+  return createTypeHandler(obj, config);
 };
 
 export const dogSchema = {
