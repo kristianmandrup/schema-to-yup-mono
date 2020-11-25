@@ -2,9 +2,9 @@ import { Base, typeMatcher } from "@schema-to-yup/core";
 
 import { createPropertyValueResolver } from "../resolver";
 
-export class YupSchemaEntryError extends Error {}
+export class SchemaEntryError extends Error {}
 
-export class YupSchemaEntry extends Base {
+export class SchemaEntry extends Base {
   schema: any;
   name: string;
   key: string;
@@ -74,7 +74,7 @@ export class YupSchemaEntry extends Base {
   error(msg, data?) {
     const { opts } = this;
     data ? console.error(msg, data, ...opts) : console.error(msg, ...opts);
-    throw new YupSchemaEntryError(msg);
+    throw new SchemaEntryError(msg);
   }
 
   toEntry() {

@@ -1,4 +1,4 @@
-import { createRangeConstraint } from "@schema-to-yup/constraints";
+import { createRangeConstraint } from "../constraints";
 import { createNum } from "./_helpers";
 
 function addContraints(obj) {

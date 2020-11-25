@@ -1,11 +1,11 @@
-import { YupBaseType } from "@schema-to-yup/base-type";
-import { BooleanHandler } from "./handler";
+import { BaseType } from "@schema-to-yup/base-type";
+import { Guard } from "./guard";
 
-export function toYupBoolean(obj, config = {}) {
-  return obj && new BooleanHandler(obj, config).handle();
+export function toInstance(obj, config = {}) {
+  return obj && new Guard(obj, config).handle();
 }
 
-export class YupBoolean extends YupBaseType {
+export class BooleanType extends BaseType {
   constructor(obj) {
     super(obj);
   }
@@ -15,6 +15,6 @@ export class YupBoolean extends YupBaseType {
   }
 
   static create(obj) {
-    return new YupBoolean(obj);
+    return new BooleanType(obj);
   }
 }

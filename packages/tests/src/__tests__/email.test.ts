@@ -1,4 +1,4 @@
-import { buildYup } from "./_helpers";
+import { buildSchema } from "@schema-to-yup/builder";
 
 describe("string: email", () => {
   let valid;
@@ -8,25 +8,25 @@ describe("string: email", () => {
     properties: {
       emailAdr: {
         type: "string",
-        format: "email"
-      }
-    }
+        format: "email",
+      },
+    },
   };
   const errMsg = "Email format incorrect";
 
   let config = {
     errMessages: {
       emailAdr: {
-        format: errMsg
-      }
-    }
+        format: errMsg,
+      },
+    },
   };
 
   // Below test fails
   // Expects "Email format incorrect" but returns "email must be a valid email"
   it("yup inserts custom messages for email format", () => {
     try {
-      const yupSchema = buildYup(message, config);
+      const yupSchema = buildSchema(message, config);
       valid = yupSchema.validateSync({ emailAdr: "xx" });
     } catch (e) {
       // console.log(e);

@@ -1,6 +1,6 @@
-import { create, createObject, createObjectNoKey } from "./_helpers";
+import { create, createObject, createObjectNoKey } from "./helpers";
 
-describe("toYupObject", () => {
+describe("createObject", () => {
   test("null - %", () => {
     expect(create(null)).toBeFalsy();
   });

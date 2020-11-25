@@ -1,6 +1,6 @@
 import { createStr, createStrNoKey, create } from "./_helpers";
 
-describe("toYupString", () => {
+describe("string: create", () => {
   test("null - %", () => {
     expect(create(null)).toBeFalsy();
   });

@@ -11,9 +11,9 @@ const defaults = {
 export class Converter extends Base {
   handler: any;
   constraintsAdder: any;
-  mixed: any;
   types: any;
   constraintsMap: any;
+  ProcessorClazz: any;
 
   constructor(handler, opts: any = {}) {
     super(opts);
@@ -23,10 +23,16 @@ export class Converter extends Base {
     const { types } = this.config;
     this.types = types;
     this.constraintsMap = types.constraints || {};
+    this.ProcessorClazz = this.constraintsMap[this.type].Processor;
   }
 
-  get mixedEnabled() {
-    return this.mixed.typesEnabled;
+  // create or get Mixed
+  get mixed() {
+    return this.types.mixed;
+  }
+
+  convertMixed() {
+    this.mixed.convert();
   }
 
   get typeEnabled() {
@@ -68,7 +74,7 @@ export class Converter extends Base {
   }
 
   get enabled() {
-    return [...this.mixedEnabled, ...this.calcTypeEnabled()];
+    return this.calcTypeEnabled();
   }
 
   convertEnabled() {
@@ -94,8 +100,7 @@ export class Converter extends Base {
   }
 
   get constraintsProcessor() {
-    const Clazz = this.constraintsMap[this.type].Processor;
-    return new Clazz(this.handler, this.opts);
+    return new this.ProcessorClazz(this.handler, this.opts);
   }
 
   rebindMethods() {
@@ -106,6 +111,7 @@ export class Converter extends Base {
   convert() {
     this.rebindMethods();
     this.addMappedConstraints();
+    this.convertMixed();
     this.convertEnabled();
     return this;
   }

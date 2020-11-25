@@ -33,15 +33,38 @@ This should make it much easier to customize the internals to fit your needs and
 
 ```ts
 import { types } from "@schema-to-yup/types";
-import { createBuilder } from "@schema-to-yup/builder";
+import { buildSchema } from "@schema-to-yup/builder";
 
-const builder = createBuilder({ types });
 const jsonSchema = {
   // ...
 };
 
 // builds yup schema from a JSON or GraphQL schema
+const yupSchema = buildSchema(jsonSchema, { types });
+```
+
+Using `createBuilder` to create a schema builder
+
+```ts
+import { types } from "@schema-to-yup/types";
+import { createBuilder } from "@schema-to-yup/builder";
+
+const jsonSchema = {
+  // ...
+};
+
+// create builder
+const builder = createBuilder({ types });
+
+// use the builder
 const yupSchema = builder.build(jsonSchema);
+
+const jsonSchema2 = {
+  // ...
+};
+
+// reuse the builder
+const yupSchema2 = builder.build(jsonSchema2);
 ```
 
 This would generate the following Yup validation schema:
@@ -107,7 +130,7 @@ const jsonSchema = {
 ### Mode examples
 
 ```js
-const yupSchema = buildYup(jsonSchema, {
+const yupSchema = buildSchema(jsonSchema, {
   mode: {
     notRequired: true, // default setting
   },

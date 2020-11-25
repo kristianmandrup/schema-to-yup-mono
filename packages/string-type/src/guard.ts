@@ -1,7 +1,7 @@
-import { Guard } from "@schema-to-yup/core";
-import { YupString } from "./string";
+import { BaseGuard } from "@schema-to-yup/core";
+import { StringType } from "./string";
 
-export class StringGuard extends Guard {
+export class Guard extends BaseGuard {
   constructor(obj, config = {}) {
     super(obj, config);
   }
@@ -13,7 +13,10 @@ export class StringGuard extends Guard {
   handle() {
     return (
       this.isString() &&
-      YupString.create({ ...this.obj, config: this.config }).createSchemaEntry()
+      StringType.create({
+        ...this.obj,
+        config: this.config,
+      }).createSchemaEntry()
     );
   }
 }

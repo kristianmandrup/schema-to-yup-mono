@@ -1,24 +1,24 @@
-import { toYupObject, createObjectGuard } from "..";
-import { buildYup } from "@schema-to-yup/builder";
+import { toInstance, createObjectGuard } from "@schema-to-yup/object-type";
+import { buildSchema } from "@schema-to-yup/builder";
 
 const isObject = (fieldDef) => fieldDef && fieldDef.type === "object";
 const config = { isObject };
 
-export { buildYup, createObjectGuard };
+export { buildSchema, createObjectGuard };
 
 export const create = (fieldDef) => {
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toYupObject(obj, config);
+  return toInstance(obj, config);
 };
 
 export const createObject = (value) => {
   const obj = { value, config, key: "x", type: "object" };
-  return toYupObject(obj, config);
+  return toInstance(obj, config);
 };
 
 export const createObjectNoKey = (value) => {
   const obj = { value, config, type: "object" };
-  return toYupObject(obj, config);
+  return toInstance(obj, config);
 };
 
 export const dogSchema = {

@@ -15,13 +15,11 @@
   ],  
   "peerDependencies": {
     "@schema-to-yup/core": "0.0.1",
-    "@schema-to-yup/base-type": "0.0.1",
-    "@schema-to-yup/builder": "0.0.1"
+    "@schema-to-yup/base-type": "0.0.1"
   },
   "devDependencies": {
     "@schema-to-yup/core": "*",
-    "@schema-to-yup/base-type": "*",
-    "@schema-to-yup/builder": "*"
+    "@schema-to-yup/base-type": "*"
   },
 
   "scripts": {

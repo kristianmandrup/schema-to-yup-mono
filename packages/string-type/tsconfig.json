@@ -1,6 +1,6 @@
 {
   "include": [
-    "src"
+    "src", "../tests/src/__tests__/email2.test.ts"
   ],
   "extends": "../../tsconfig.json",
   "compilerOptions": {
@@ -9,7 +9,6 @@
   },
   "references": [
     { "path": "../core" },
-    { "path": "../base-type" },
-    { "path": "../builder" }
+    { "path": "../base-type" }
   ]
 }

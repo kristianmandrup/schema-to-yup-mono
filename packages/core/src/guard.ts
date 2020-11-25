@@ -1,7 +1,7 @@
 import { Base } from "./base";
 import { typeMatcher } from "./type-matcher";
 
-export class Guard extends Base {
+export class BaseGuard extends Base {
   obj: any;
 
   constructor(obj, config) {

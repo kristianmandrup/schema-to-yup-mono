@@ -1,8 +1,7 @@
-import { YupObject } from "./object";
+import { ObjectType } from "./object";
+import { BaseGuard } from "@schema-to-yup/core";
 
-import { Guard } from "@schema-to-yup/core";
-
-export class ObjectGuard extends Guard {
+export class Guard extends BaseGuard {
   constructor(obj, config: any = {}) {
     super(obj, config);
   }
@@ -14,11 +13,14 @@ export class ObjectGuard extends Guard {
   handle() {
     return (
       this.isObject() &&
-      YupObject.create({ ...this.obj, config: this.config }).createSchemaEntry()
+      ObjectType.create({
+        ...this.obj,
+        config: this.config,
+      }).createSchemaEntry()
     );
   }
 }
 
 export function createObjectGuard(obj, config = {}) {
-  return new ObjectGuard(obj, config);
+  return new Guard(obj, config);
 }

@@ -1,8 +1,6 @@
-import { YupSchemaEntry } from "./entry";
+import { SchemaEntry } from "./entry";
 
-function createYupSchemaEntry(opts = {}) {
+export function createSchemaEntry(opts = {}) {
   // const { schema, name, key, value, config } = opts;
-  return new YupSchemaEntry(opts).toEntry();
+  return new SchemaEntry(opts).toEntry();
 }
-
-export { createYupSchemaEntry };

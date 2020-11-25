@@ -1,24 +1,24 @@
-import { toYupArray } from "../";
-import { createYupSchemaEntry } from "@schema-to-yup/builder";
+import { toInstance } from "../";
+import { createSchemaEntry } from "@schema-to-yup/builder";
 import { defaults } from "@schema-to-yup/core";
 import * as yup from "yup";
 
-const defaultConfig = { ...defaults, createYupSchemaEntry };
+const defaultConfig = { ...defaults, createSchemaEntry };
 
 const create = (fieldDef, config = {}) => {
   config = Object.assign(defaultConfig, config);
   const obj = fieldDef instanceof Object ? { ...fieldDef, config } : fieldDef;
-  return toYupArray(obj, config);
+  return toInstance(obj, config);
 };
 
 const createArr = (value, config = defaultConfig) => {
   const obj = { value, config, key: "list", type: "array" };
-  return toYupArray(obj, config);
+  return toInstance(obj, config);
 };
 
 const createArrNoKey = (value, config = defaultConfig) => {
   const obj = { value, config, type: "array" };
-  return toYupArray(obj, config);
+  return toInstance(obj, config);
 };
 
 const createSchema = (list) => {
@@ -27,7 +27,7 @@ const createSchema = (list) => {
   });
 };
 
-describe("toYupArray", () => {
+describe("array: create", () => {
   test("null - %", () => {
     expect(create(null)).toBeFalsy();
   });

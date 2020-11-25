@@ -1,12 +1,12 @@
-import { YupBaseType } from "@schema-to-yup/base-type";
-import { ObjectGuard } from "./guard";
+import { BaseType } from "@schema-to-yup/base-type";
+import { Guard } from "./guard";
 
-export const toYupObject = (obj, config = {}) => {
-  return obj && new ObjectGuard(obj, config).handle();
+export const toInstance = (obj, config = {}) => {
+  return obj && new Guard(obj, config).handle();
 };
 
 // Allow recursive schema
-export class YupObject extends YupBaseType {
+export class ObjectType extends BaseType {
   properties: any;
 
   constructor(obj) {
@@ -14,12 +14,12 @@ export class YupObject extends YupBaseType {
     this.properties = this.value.properties;
   }
 
-  get yupType() {
+  get typeName() {
     return "object";
   }
 
   static create(obj) {
-    return new YupObject(obj);
+    return new ObjectType(obj);
   }
 
   get typeEnabled() {

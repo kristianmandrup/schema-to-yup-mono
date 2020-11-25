@@ -1,4 +1,4 @@
-import { createObjectGuard, schema, dogSchema, buildYup } from "./helpers";
+import { createObjectGuard, schema, dogSchema, buildSchema } from "./helpers";
 
 describe("ObjectHandler", () => {
   describe("createObjectGuard", () => {
@@ -18,7 +18,7 @@ describe("ObjectHandler", () => {
   describe("instance", () => {
     describe("handle", () => {
       describe("recursive object schema", () => {
-        const instance = createObjectGuard({ schema, buildYup });
+        const instance = createObjectGuard({ schema, buildSchema });
         const obj = {
           key: "dog",
           type: "object",

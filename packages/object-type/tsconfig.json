@@ -1,6 +1,6 @@
 {
   "include": [
-    "src"
+    "src", "../tests/src/__tests__/object-type/complex-schema.test.ts"
   ],
   "extends": "../../tsconfig.json",
   "compilerOptions": {
@@ -10,7 +10,6 @@
   "references": [
     { "path": "../core" },
     { "path": "../base-type" },
-    { "path": "../constraints" },
-    { "path": "../builder" },
+    { "path": "../constraints" }
   ]
 }

@@ -14,8 +14,8 @@ const defaults = {
   },
 };
 
-export class YupBaseType extends Base {
-  yup: any;
+export class BaseType extends Base {
+  instance: any;
   key?: string;
   type?: string;
   schema: any;
@@ -62,7 +62,7 @@ export class YupBaseType extends Base {
 
   setInstType(name = this.yupType) {
     this.type = name;
-    const inst = this.yup[name]();
+    const inst = this.instance[name]();
     return this.setTypeInstance(inst);
   }
 
@@ -109,7 +109,7 @@ export class YupBaseType extends Base {
     config = config || {};
     schema = schema || {};
     this.validateOnCreate(key, value, opts);
-    this.yup = yup;
+    this.instance = yup;
     this.key = key;
     this.schema = schema;
     this.properties = schema.properties || {};

@@ -1,32 +1,35 @@
-import { createNumberGuard, NumberGuard } from "./guard";
+import { createNumberGuard } from "./guard";
 
 const proceed = (obj, config = {}) => {
   return createNumberGuard(obj, config).verify();
 };
 
-export const toYupNumber = (obj, config = {}) => {
-  return proceed(obj, config) && buildYupNumber(obj);
+export const toNumber = (obj, config = {}) => {
+  return proceed(obj, config) && buildNumber(obj);
 };
 
-function toYupNumberSchemaEntry(obj, config = {}) {
+export function toNumberSchemaEntry(obj, config = {}) {
   return proceed(obj, config) && buildSchemaEntry(obj);
 }
 
 function buildSchemaEntry(obj) {
-  return YupNumber.schemaEntryFor(obj);
+  return NumberType.schemaEntryFor(obj);
 }
 
-function buildYupNumber(obj) {
-  return YupNumber.create(obj);
+function buildNumber(obj) {
+  return NumberType.create(obj);
 }
 
-import { YupBaseType } from "@schema-to-yup/base-type";
+import { BaseType } from "@schema-to-yup/base-type";
 
-class YupNumber extends YupBaseType {
+export class NumberType extends BaseType {
   constructor(obj) {
     super(obj);
     this.type = this.normalizeNumType(obj.type);
-    this.base = this.yup.number();
+  }
+
+  get typeName() {
+    return "number";
   }
 
   normalizeNumType(type) {
@@ -34,11 +37,11 @@ class YupNumber extends YupBaseType {
   }
 
   static create(obj) {
-    return new YupNumber(obj);
+    return new NumberType(obj);
   }
 
   static schemaEntryFor(obj) {
-    return YupNumber.create(obj).createSchemaEntry();
+    return NumberType.create(obj).createSchemaEntry();
   }
 
   get typeEnabled() {
@@ -55,5 +58,3 @@ class YupNumber extends YupBaseType {
     this.constraints.minimum = this.constraints.minimum || this.constraints.min;
   }
 }
-
-export { toYupNumberSchemaEntry, YupNumber, createNumberGuard, NumberGuard };

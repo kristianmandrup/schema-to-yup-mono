@@ -1,6 +1,6 @@
-import { Guard } from "@schema-to-yup/core";
+import { BaseGuard } from "@schema-to-yup/core";
 
-class NumberGuard extends Guard {
+export class Guard extends BaseGuard {
   constructor(obj, config) {
     super(obj, config);
   }
@@ -10,8 +10,6 @@ class NumberGuard extends Guard {
   }
 }
 
-function createNumberGuard(obj, config) {
-  return new NumberGuard(obj, config);
+export function createNumberGuard(obj, config) {
+  return new Guard(obj, config);
 }
-
-export { createNumberGuard, NumberGuard };

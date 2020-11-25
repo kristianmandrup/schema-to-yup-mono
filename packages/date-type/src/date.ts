@@ -1,11 +1,11 @@
-import { YupBaseType } from "@schema-to-yup/base-type";
-import { DateGuard } from "./guard";
+import { BaseType } from "@schema-to-yup/base-type";
+import { Guard } from "./guard";
 
-export function toYupDate(obj, config = {}) {
-  return obj && new DateGuard(obj, config).handle();
+export function toInstance(obj, config = {}) {
+  return obj && new Guard(obj, config).handle();
 }
 
-export class YupDate extends YupBaseType {
+export class DateType extends BaseType {
   constructor(obj) {
     super(obj);
   }
@@ -15,7 +15,7 @@ export class YupDate extends YupBaseType {
   }
 
   static create(obj) {
-    return new YupDate(obj);
+    return new DateType(obj);
   }
 
   get typeEnabled() {

@@ -1,7 +1,7 @@
-import { Guard } from "@schema-to-yup/core";
-import { YupDate } from "./date";
+import { BaseGuard } from "@schema-to-yup/core";
+import { DateType } from "./date";
 
-export class DateGuard extends Guard {
+export class Guard extends BaseGuard {
   constructor(obj, config) {
     super(obj, config);
   }
@@ -13,7 +13,7 @@ export class DateGuard extends Guard {
   handle() {
     return (
       this.isDate() &&
-      YupDate.create({ ...this.obj, ...this.config }).createSchemaEntry()
+      DateType.create({ ...this.obj, ...this.config }).createSchemaEntry()
     );
   }
 }

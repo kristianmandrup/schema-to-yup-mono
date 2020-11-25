@@ -1,9 +1,11 @@
-// See:
-// http://json-schema.org/latest/json-schema-validation.html#rfc.section.6.4
+import { BaseType } from "@schema-to-yup/base-type";
+import { Guard } from "./guard";
 
-import { YupBaseType } from "@schema-to-yup/base-type";
+export function toInstance(obj, config = {}) {
+  return obj && new Guard(obj, config).handle();
+}
 
-export class YupArray extends YupBaseType {
+export class ArrayType extends BaseType {
   createYupSchemaEntry: any;
 
   constructor(obj) {
@@ -11,12 +13,12 @@ export class YupArray extends YupBaseType {
     this.createYupSchemaEntry = this.config.createYupSchemaEntry;
   }
 
-  get yupType() {
+  get typeName() {
     return "array";
   }
 
   static create(obj) {
-    return new YupArray(obj);
+    return new ArrayType(obj);
   }
 
   convert() {

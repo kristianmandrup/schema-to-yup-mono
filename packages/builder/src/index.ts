@@ -3,37 +3,43 @@ import { typeMatcher, Base } from "@schema-to-yup/core";
 const { isObjectType } = typeMatcher;
 
 export * from "./resolver";
-import { createYupSchemaEntry } from "./entry";
-export { createYupSchemaEntry };
+import { createSchemaEntry } from "./entry";
+export { createSchemaEntry };
 
 function isObject(type: string) {
   return type && type === "object";
 }
 
-export function buildYup(schema: any, config = {}) {
-  return new YupBuilder(schema, config).yupSchema;
+export function buildSchema(schema: any, config = {}) {
+  return createBuilder(config).build(schema);
 }
 
-export class YupBuilder extends Base {
+export function createBuilder(config = {}) {
+  return new SchemaBuilder(config);
+}
+
+export class SchemaBuilder extends Base {
   config: any;
-  schema: any;
-  type: string;
+  _schema: any;
+  type: string = "";
   properties: any;
   additionalProps: any;
-  required: any[];
+  required: any[] = [];
   shapeConfig: any;
   validSchema: boolean = false;
   objPropsShape: any;
   addPropsShape: any;
 
-  constructor(schema: any, config: any = {}) {
+  constructor(config: any = {}) {
     super(config);
-    config.buildYup = buildYup;
-    config.createYupSchemaEntry =
-      config.createYupSchemaEntry || createYupSchemaEntry;
+    config.buildSchema = buildSchema;
+    config.createSchemaEntry = config.createSchemaEntry || createSchemaEntry;
     this.config = Object.assign(this.config, config);
+  }
 
-    this.schema = schema;
+  build(schema: any) {
+    const { config } = this;
+    this._schema = schema;
     const type = this.getType(schema);
     const props = this.getProps(schema);
     this.type = type;
@@ -58,6 +64,7 @@ export class YupBuilder extends Base {
 
     this.shapeConfig = shapeConfig;
     this.validSchema = true;
+    return this.schema;
   }
 
   getAdditionalProperties(schema: { additionalProperties: any }) {
@@ -81,7 +88,7 @@ export class YupBuilder extends Base {
     return this.config.getName(obj);
   }
 
-  get yupSchema() {
+  get schema() {
     return yup.object().shape(this.shapeConfig);
   }
 
@@ -134,19 +141,19 @@ export class YupBuilder extends Base {
     const keys = Object.keys(properties);
     return keys.reduce((acc, key) => {
       const value = properties[key];
-      const yupSchemaEntry = this.propToYupSchemaEntry({
+      const schemaEntry = this.propToSchemaEntry({
         name,
         key,
         value,
       });
-      this.logInfo("propsToShape", { key, yupSchemaEntry });
-      acc[key] = yupSchemaEntry;
+      this.logInfo("propsToShape", { key, schemaEntry });
+      acc[key] = schemaEntry;
       return acc;
     }, {});
   }
 
-  propToYupSchemaEntry({ name, key, value = {} }) {
-    return this.createYupSchemaEntry({
+  propToSchemaEntry({ name, key, value = {} }) {
+    return this.createSchemaEntry({
       schema: this.schema,
       name,
       key,
@@ -155,9 +162,9 @@ export class YupBuilder extends Base {
     });
   }
 
-  createYupSchemaEntry({ schema, name, key, value, config }) {
+  createSchemaEntry({ schema, name, key, value, config }) {
     // return createYupSchemaEntry({ name, key, value, config });
-    const yupEntry = config.createYupSchemaEntry({
+    const yupEntry = config.createSchemaEntry({
       schema,
       name,
       key,

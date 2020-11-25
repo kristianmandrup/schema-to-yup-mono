@@ -20,7 +20,7 @@ describe("isNumber", () => {
   });
 });
 
-describe("toYupNumber", () => {
+describe("createEntry", () => {
   test("null - %", () => {
     expect(createEntry(null)).toBeFalsy();
   });

@@ -1,14 +1,12 @@
-class ConvertYupSchemaError extends Error {}
+import { BaseType } from "@schema-to-yup/base-type";
 
-import { YupBaseType } from "@schema-to-yup/base-type";
-
-class YupMixed extends YupBaseType {
+export class MixedType extends BaseType {
   constructor(opts: any = {}) {
     super(opts);
     this.init();
   }
 
-  get yupType() {
+  get typeName() {
     return "mixed";
   }
 
@@ -40,5 +38,3 @@ class YupMixed extends YupBaseType {
     );
   }
 }
-
-export { YupMixed, ConvertYupSchemaError };

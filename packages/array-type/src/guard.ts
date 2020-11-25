@@ -1,7 +1,7 @@
-import { Guard } from "@schema-to-yup/core";
-import { YupArray } from "./array";
+import { BaseGuard } from "@schema-to-yup/core";
+import { ArrayType } from "./array";
 
-export class ArrayGuard extends Guard {
+export class Guard extends BaseGuard {
   constructor(obj, config) {
     super(obj, config);
   }
@@ -16,7 +16,7 @@ export class ArrayGuard extends Guard {
   handle() {
     return (
       this.isArray() &&
-      YupArray.create({ ...this.obj, ...this.config }).createSchemaEntry()
+      ArrayType.create({ ...this.obj, ...this.config }).createSchemaEntry()
     );
   }
 }

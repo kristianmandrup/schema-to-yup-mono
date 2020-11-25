@@ -1,12 +1,11 @@
-import { YupBaseType } from "@schema-to-yup/base-type";
-import { StringGuard as Guard } from "./guard";
+import { BaseType } from "@schema-to-yup/base-type";
+import { Guard } from "./guard";
 
-export const toYup = (obj, config = {}) => {
+export const toInstance = (obj, config = {}) => {
   return obj && new Guard(obj, config).handle();
 };
-export { Guard };
 
-export class YupString extends YupBaseType {
+export class StringType extends BaseType {
   constructor(obj) {
     super(obj);
   }
@@ -16,7 +15,7 @@ export class YupString extends YupBaseType {
   }
 
   static create(obj) {
-    return new YupString(obj);
+    return new StringType(obj);
   }
 
   get typeEnabled() {
