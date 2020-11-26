@@ -1,16 +1,15 @@
 import { BaseGuard } from "@schema-to-yup/core";
-import { TypeHandler } from "./boolean";
 
 export class Guard extends BaseGuard {
-  constructor(obj, config) {
-    super(obj, config);
-  }
-
   isBoolean() {
     return this.config.isBoolean(this.obj);
   }
 
-  handle() {
-    return this.isBoolean() && TypeHandler.create(this.obj).createSchemaEntry();
+  guard() {
+    return this.isBoolean();
   }
 }
+
+export const createGuard = (obj, config) => new Guard(obj, config);
+
+export const guard = (obj, config) => obj && createGuard(obj, config).guard();

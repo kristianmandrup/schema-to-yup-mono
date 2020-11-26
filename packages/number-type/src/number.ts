@@ -5,26 +5,26 @@ const proceed = (obj, config = {}) => {
 };
 
 export const toNumber = (obj, config = {}) => {
-  return proceed(obj, config) && buildNumber(obj);
+  return proceed(obj, config) && buildNumber(obj, config);
 };
 
 export function toNumberSchemaEntry(obj, config = {}) {
-  return proceed(obj, config) && buildSchemaEntry(obj);
+  return proceed(obj, config) && buildSchemaEntry(obj, config);
 }
 
-function buildSchemaEntry(obj) {
-  return TypeHandler.schemaEntryFor(obj);
+function buildSchemaEntry(obj, config) {
+  return TypeHandler.schemaEntryFor(obj, config);
 }
 
-function buildNumber(obj) {
-  return TypeHandler.create(obj);
+function buildNumber(obj, config) {
+  return TypeHandler.create(obj, config);
 }
 
 import { BaseType } from "@schema-to-yup/base-type";
 
 export class TypeHandler extends BaseType {
-  constructor(obj) {
-    super(obj);
+  constructor(obj, config) {
+    super(obj, config);
     this.type = this.normalizeNumType(obj.type);
   }
 
@@ -36,12 +36,12 @@ export class TypeHandler extends BaseType {
     return type === "int" ? "integer" : type;
   }
 
-  static create(obj) {
-    return new TypeHandler(obj);
+  static create(obj, config) {
+    return new TypeHandler(obj, config);
   }
 
-  static schemaEntryFor(obj) {
-    return TypeHandler.create(obj).createSchemaEntry();
+  static schemaEntryFor(obj, config) {
+    return TypeHandler.create(obj, config).createSchemaEntry();
   }
 
   get typeEnabled() {

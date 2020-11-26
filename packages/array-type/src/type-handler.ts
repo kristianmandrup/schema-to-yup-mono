@@ -8,8 +8,8 @@ export function createTypeHandler(obj, config = {}) {
 export class TypeHandler extends BaseType {
   createYupSchemaEntry: any;
 
-  constructor(obj) {
-    super(obj);
+  constructor(obj, config) {
+    super(obj, config);
     this.createSchemaEntry = this.config.createSchemaEntry;
   }
 
@@ -17,8 +17,8 @@ export class TypeHandler extends BaseType {
     return "array";
   }
 
-  static create(obj) {
-    return new TypeHandler(obj);
+  static create(obj, config) {
+    return new TypeHandler(obj, config);
   }
 
   convert() {

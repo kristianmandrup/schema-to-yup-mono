@@ -17,7 +17,7 @@ export class Recursive extends BaseTypeConstraint {
       if (!config.buildYup) {
         this.error("convert", "Missing buildYup function from config", config);
       }
-      this.setTypeInst(this.config.buildYup(schema, config));
+      this.setTypeInstance(this.config.buildYup(schema, config));
     }
   }
 }

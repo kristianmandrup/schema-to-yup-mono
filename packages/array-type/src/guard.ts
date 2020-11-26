@@ -1,5 +1,5 @@
 import { BaseGuard } from "@schema-to-yup/core";
-import { TypeHandler } from "./array";
+import { TypeHandler } from "./type-handler";
 
 export class Guard extends BaseGuard {
   constructor(obj, config) {
@@ -16,7 +16,7 @@ export class Guard extends BaseGuard {
   handle() {
     return (
       this.isArray() &&
-      TypeHandler.create({ ...this.obj, ...this.config }).createSchemaEntry()
+      TypeHandler.create(this.obj, this.config).createSchemaEntry()
     );
   }
 }

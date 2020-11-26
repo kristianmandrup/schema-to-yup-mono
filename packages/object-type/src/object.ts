@@ -9,8 +9,8 @@ export const createTypeHandler = (obj, config = {}) => {
 export class TypeHandler extends BaseType {
   properties: any;
 
-  constructor(obj) {
-    super(obj);
+  constructor(obj, config) {
+    super(obj, config);
     this.properties = this.value.properties;
   }
 
@@ -18,8 +18,8 @@ export class TypeHandler extends BaseType {
     return "object";
   }
 
-  static create(obj) {
-    return new TypeHandler(obj);
+  static create(obj, config) {
+    return new TypeHandler(obj, config);
   }
 
   get typeEnabled() {

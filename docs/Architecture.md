@@ -147,3 +147,65 @@ Each `Constraint` class should inherit from `BaseTypeConstrain` and have a `proc
 A `yup` type schema instance is built using method chaining. To facilitate chaining, use the built-in `chain` method, such as `this.chain((x) => $max && x.max($max));` used in `MaxItems`.
 
 The `Constraint` class can leverage helpers such as those found in the `constraints` package. Conditional constraints (such as `when`) can be found in the `conditions` package.
+
+## TypeHandler design
+
+The ideal design of a `TypeHandler` looks as follows
+
+```ts
+import { BaseType } from "@schema-to-yup/base-type";
+import { guard } from "./guard";
+
+export function processTypeHandler(obj, config = {}) {
+  return guard(obj, config) && createSchemaEntry(obj, config);
+}
+
+export function createSchemaEntry(obj, config = {}) {
+  return createTypeHandler(obj, config).createSchemaEntry();
+}
+
+export function createTypeHandler(obj, config = {}) {
+  return new TypeHandler(obj, config);
+}
+
+export class TypeHandler extends BaseType {
+  constructor(obj, config) {
+    super(obj, config);
+  }
+
+  get yupType() {
+    return "boolean";
+  }
+
+  static create(obj, config) {
+    return new TypeHandler(obj, config);
+  }
+}
+```
+
+The `processTypeHandler` is the main function, to be called by the `Converter` to convert a property schema to the output desired. It calls the `guard` to validate the property schema and determine if the `TypeHandler` is appropriate for the given schema and an instance should be created.
+
+If the schema is invalid for the type handler, `processTypeHandler` will return a "falsy" value. If the schema is valid for the type handler, `processTypeHandler` will create an instance of `TypeHandler` and call `createSchemaEntry()` on the instance to generate the new schema entry for the property schema, which is returned.
+
+## Guard design
+
+Each `Guard` class must have a `guard` method which guards the `TypeHandler` by evaluating if the incoming property schema is valid for the given `TypeHandler`.
+
+The `Guard` may call methods on the `config` object, such as `isBoolean` in this case, which determines if the property schema is for the boolean type (depending on the input schema variant, such as JSON Schema or GraphQL schema etc).
+
+```ts
+import { BaseGuard } from "@schema-to-yup/core";
+
+export class Guard extends BaseGuard {
+  isBoolean() {
+    return this.config.isBoolean(this.obj);
+  }
+
+  guard() {
+    return this.isBoolean();
+  }
+}
+
+export const createGuard = (obj, config) => new Guard(obj, config);
+export const guard = (obj, config) => obj && createGuard(obj, config).guard();
+```

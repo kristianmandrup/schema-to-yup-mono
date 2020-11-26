@@ -6,16 +6,16 @@ export const createTypeHandler = (obj, config = {}) => {
 };
 
 export class TypeHandler extends BaseType {
-  constructor(obj) {
-    super(obj);
+  constructor(obj, config) {
+    super(obj, config);
   }
 
   get yupType() {
     return "string";
   }
 
-  static create(obj) {
-    return new TypeHandler(obj);
+  static create(obj, config) {
+    return new TypeHandler(obj, config);
   }
 
   get typeEnabled() {

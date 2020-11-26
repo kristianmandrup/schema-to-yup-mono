@@ -13,7 +13,7 @@ export class Guard extends BaseGuard {
   handle() {
     return (
       this.isDate() &&
-      TypeHandler.create({ ...this.obj, ...this.config }).createSchemaEntry()
+      TypeHandler.create(this.obj, this.config).createSchemaEntry()
     );
   }
 }

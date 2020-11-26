@@ -60,5 +60,6 @@ export class BaseTypeConstraintsProcessor extends Loggable {
   process(name) {
     const processor = this.createTypeConstraintProcessorFor(name);
     processor.process();
+    return this;
   }
 }

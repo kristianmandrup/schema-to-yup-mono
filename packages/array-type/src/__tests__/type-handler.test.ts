@@ -1,4 +1,4 @@
-import { createTypeHandler } from "../";
+import { createTypeHandler } from "..";
 import { createSchemaEntry } from "@schema-to-yup/builder";
 import { defaults } from "@schema-to-yup/core";
 import * as yup from "yup";

@@ -21,7 +21,7 @@ export class BaseType extends Base {
   schema: any;
   properties: any;
   value: any;
-  base: any;
+  typeInstance: any;
   constraints: any;
   format?: string;
 
@@ -34,8 +34,8 @@ export class BaseType extends Base {
   errMessages: any;
   constraintsAdded: any;
 
-  constructor(opts: any = {}) {
-    super(opts.config);
+  constructor(obj: any = {}, config) {
+    super(config || obj.config);
     this.init();
   }
 
@@ -43,7 +43,7 @@ export class BaseType extends Base {
     return this.config.types;
   }
 
-  get yupType() {
+  get typeName() {
     return "mixed";
   }
 
@@ -52,15 +52,15 @@ export class BaseType extends Base {
   }
 
   setTypeInstance(inst) {
-    this.base = inst || this.base;
+    this.typeInstance = inst || this.typeInstance;
     return this;
   }
 
   chain(cb) {
-    return this.setTypeInstance(cb(this.base));
+    return this.setTypeInstance(cb(this.typeInstance));
   }
 
-  setInstType(name = this.yupType) {
+  setInstType(name = this.typeName) {
     this.type = name;
     const inst = this.instance[name]();
     return this.setTypeInstance(inst);
@@ -175,7 +175,7 @@ export class BaseType extends Base {
   }
 
   createSchemaEntry() {
-    return this.convert().base;
+    return this.convert().typeInstance;
   }
 
   createConverter() {

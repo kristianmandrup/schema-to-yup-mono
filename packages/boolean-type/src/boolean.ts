@@ -1,20 +1,28 @@
 import { BaseType } from "@schema-to-yup/base-type";
-import { Guard } from "./guard";
+import { guard } from "./guard";
+
+export function processTypeHandler(obj, config = {}) {
+  return guard(obj, config) && createSchemaEntry(obj, config);
+}
+
+export function createSchemaEntry(obj, config = {}) {
+  return createTypeHandler(obj, config).createSchemaEntry();
+}
 
 export function createTypeHandler(obj, config = {}) {
-  return obj && new Guard(obj, config).handle();
+  return new TypeHandler(obj, config);
 }
 
 export class TypeHandler extends BaseType {
-  constructor(obj) {
-    super(obj);
+  constructor(obj, config) {
+    super(obj, config);
   }
 
   get yupType() {
     return "boolean";
   }
 
-  static create(obj) {
-    return new TypeHandler(obj);
+  static create(obj, config) {
+    return new TypeHandler(obj, config);
   }
 }

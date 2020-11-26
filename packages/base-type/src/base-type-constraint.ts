@@ -11,8 +11,8 @@ export class BaseTypeConstraint extends Base {
     this.errorHandler = handler.errorHandler || this.createTypeErrorHandler();
   }
 
-  setTypeInst(inst) {
-    this.handler.setTypeInst(inst);
+  setTypeInstance(inst) {
+    this.handler.setTypeInstance(inst);
   }
 
   get yup() {
@@ -41,10 +41,6 @@ export class BaseTypeConstraint extends Base {
 
   createTypeErrorHandler() {
     return new TypeErrorHandler(this.opts);
-  }
-
-  get base() {
-    return this.handler.base;
   }
 
   get constraints() {
