@@ -34,8 +34,8 @@ export class BaseType extends Base {
   errMessages: any;
   constraintsAdded: any;
 
-  constructor(obj: any = {}, config) {
-    super(config || obj.config);
+  constructor(propertySchema: any = {}, config) {
+    super(propertySchema, config);
     this.init();
   }
 
@@ -104,11 +104,11 @@ export class BaseType extends Base {
   }
 
   configure() {
-    const { opts } = this;
-    let { schema, key, value, config } = opts;
-    config = config || {};
+    const { propertySchema, config } = this;
+    let { key, value } = propertySchema;
+    let { schema } = config;
     schema = schema || {};
-    this.validateOnCreate(key, value, opts);
+    this.validateOnCreate(key, value, propertySchema);
     this.instance = yup;
     this.key = key;
     this.schema = schema;
@@ -179,10 +179,10 @@ export class BaseType extends Base {
   }
 
   createConverter() {
-    return new this.classMap.Converter(this, this.opts);
+    return new this.classMap.Converter(this, this.propertySchema);
   }
 
   createMixed() {
-    return new this.classMap.YupMixed(this.opts);
+    return new this.classMap.YupMixed(this.propertySchema);
   }
 }

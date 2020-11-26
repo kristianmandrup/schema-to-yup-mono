@@ -15,10 +15,10 @@ export class Converter extends Base {
   constraintsMap: any;
   ProcessorClazz: any;
 
-  constructor(handler, opts: any = {}) {
-    super(opts);
+  constructor(handler, propertySchema, config: any = {}) {
+    super(propertySchema, config);
     this.handler = handler;
-    this.constraintsAdder = this.createConstraintsAdder(opts);
+    this.constraintsAdder = this.createConstraintsAdder(propertySchema, config);
     this.init();
     const { types } = this.config;
     this.types = types;
@@ -27,7 +27,7 @@ export class Converter extends Base {
   }
 
   createMixedType() {
-    return this.types.createTypeHandler(this.opts);
+    return this.types.createTypeHandler(this.propertySchema);
   }
 
   // create or get Mixed
@@ -104,7 +104,11 @@ export class Converter extends Base {
   }
 
   get constraintsProcessor() {
-    return new this.ProcessorClazz(this.handler, this.opts);
+    return new this.ProcessorClazz(
+      this.handler,
+      this.propertySchema,
+      this.config
+    );
   }
 
   convert() {
@@ -118,7 +122,11 @@ export class Converter extends Base {
     this.constraintsAdder.addMappedConstraints();
   }
 
-  createConstraintsAdder(opts) {
-    return new this.classMap.ConstraintsAdder(this.handler, opts);
+  createConstraintsAdder(propertySchema, config) {
+    return new this.classMap.ConstraintsAdder(
+      this.handler,
+      propertySchema,
+      config
+    );
   }
 }

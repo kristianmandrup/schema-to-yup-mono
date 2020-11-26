@@ -5,8 +5,8 @@ export class BaseTypeConstraint extends Base {
   handler: any;
   errorHandler: any;
 
-  constructor(handler, opts = {}) {
-    super(opts);
+  constructor(handler, propertySchema, config = {}) {
+    super(propertySchema, config);
     this.handler = handler;
     this.errorHandler = handler.errorHandler || this.createTypeErrorHandler();
   }
@@ -40,7 +40,7 @@ export class BaseTypeConstraint extends Base {
   createYupSchemaEntry(_ = {}) {}
 
   createTypeErrorHandler() {
-    return new TypeErrorHandler(this.opts);
+    return new TypeErrorHandler(this.propertySchema);
   }
 
   get constraints() {

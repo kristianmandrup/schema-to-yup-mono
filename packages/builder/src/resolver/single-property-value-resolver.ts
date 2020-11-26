@@ -27,12 +27,12 @@ export class SinglePropertyValueResolver extends BasePropertyValueResolver {
   }
 
   resolveTypeHandlers(typeHandlerNames) {
-    const { obj, config, resolveTypeHandler, types } = this;
+    const { propertySchema, config, resolveTypeHandler, types } = this;
     let result;
     // iterate all registered type handlers in this.types
     for (let typeName of typeHandlerNames) {
       const typeHandler = types[typeName];
-      result = resolveTypeHandler(typeHandler, obj, config);
+      result = resolveTypeHandler(typeHandler, propertySchema, config);
       if (result) break;
     }
     return result;

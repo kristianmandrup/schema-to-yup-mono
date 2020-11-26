@@ -1,15 +1,11 @@
 import { BaseGuard } from "@schema-to-yup/core";
 
 export class Guard extends BaseGuard {
-  constructor(obj, config) {
-    super(obj, config);
-  }
-
   isValid() {
-    return this.config.isNumber(this.obj);
+    return this.config.isNumber(this.propertySchema);
   }
 }
 
-export function createNumberGuard(obj, config) {
-  return new Guard(obj, config);
+export function createNumberGuard(propertySchema, config) {
+  return new Guard(propertySchema, config);
 }

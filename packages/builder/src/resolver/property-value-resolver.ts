@@ -16,24 +16,27 @@ export class PropertyValueResolver extends BasePropertyValueResolver {
   }
 
   initResolvers() {
-    const { opts, config } = this;
+    const { propertySchema, config } = this;
     const createMultiTypeResolverFn =
       config.createMultiTypeResolver || this.createMultiTypeResolver.bind(this);
-    this.multiTypeResolver = createMultiTypeResolverFn(opts, config);
+    this.multiTypeResolver = createMultiTypeResolverFn(propertySchema, config);
     const createSingleTypeResolverFn =
       config.createSingleTypeResolver ||
       this.createSingleTypeResolver.bind(this);
-    this.singleTypeResolver = createSingleTypeResolverFn(opts, config);
+    this.singleTypeResolver = createSingleTypeResolverFn(
+      propertySchema,
+      config
+    );
   }
 
   createMultiTypeResolver() {
-    const { opts, config } = this;
-    return new MultiPropertyValueResolver(opts, config);
+    const { propertySchema, config } = this;
+    return new MultiPropertyValueResolver(propertySchema, config);
   }
 
   createSingleTypeResolver() {
-    const { opts, config } = this;
-    return new SinglePropertyValueResolver(opts, config);
+    const { propertySchema, config } = this;
+    return new SinglePropertyValueResolver(propertySchema, config);
   }
 
   resolve() {

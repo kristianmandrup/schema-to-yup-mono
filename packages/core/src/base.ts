@@ -5,12 +5,12 @@ import { typeMatcher } from "./type-matcher";
 export class Base extends Loggable {
   config: any;
   classMap: any;
-  opts: any;
+  propertySchema: any;
 
-  constructor(opts: any = {}) {
-    super(opts.config);
-    this.opts = opts;
-    const config = opts.config || {};
+  constructor(propertySchema, config: any = {}) {
+    super(config);
+    this.propertySchema = propertySchema;
+    config = config || {};
     const schemaType = config.schemaType || "json-schema";
     const $defaults = defaults[schemaType];
     this.config = { ...$defaults, ...config };

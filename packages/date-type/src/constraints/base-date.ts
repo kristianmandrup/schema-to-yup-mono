@@ -4,14 +4,14 @@ import { DateHelpers, typeMatcher } from "@schema-to-yup/core";
 export class BaseDateConstraint extends BaseTypeConstraint {
   helper: any;
 
-  constructor(handler, opts = {}) {
-    super(handler, opts);
+  constructor(handler, propertySchema = {}, config = {}) {
+    super(handler, propertySchema, config);
     this.init();
   }
 
   init() {
     super.init();
-    this.helper = new DateHelpers(this.opts);
+    this.helper = new DateHelpers(this.propertySchema);
   }
 
   isNothing(value) {

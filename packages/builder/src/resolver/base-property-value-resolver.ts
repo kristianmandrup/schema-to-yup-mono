@@ -11,10 +11,11 @@ export class BasePropertyValueResolver extends Base {
   type: string;
   types: any;
 
-  constructor(opts, config) {
-    super(config);
-    const { value, type, kind, name, key, schema, types } = opts;
-    this.opts = opts;
+  constructor(propertySchema, config: any = {}) {
+    super(propertySchema, config);
+    const { value, type, kind, name, key, types } = propertySchema;
+    const { schema } = config;
+    this.propertySchema = propertySchema;
     this.kind = kind;
     this.value = value;
     this.schema = schema;
@@ -26,24 +27,14 @@ export class BasePropertyValueResolver extends Base {
   }
 
   error(msg, data) {
-    const { opts } = this;
-    data ? console.error(msg, data, ...opts) : console.error(msg, ...opts);
+    const { propertySchema } = this;
+    data
+      ? console.error(msg, data, propertySchema)
+      : console.error(msg, propertySchema);
     throw new PropertyValueResolverError(msg);
   }
 
   resolve() {
     throw "Must be implemented by subclass";
-  }
-
-  get obj() {
-    const { schema, key, value, type, kind, config } = this;
-    return {
-      schema,
-      key,
-      value,
-      type,
-      kind,
-      config,
-    };
   }
 }

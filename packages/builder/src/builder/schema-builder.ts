@@ -41,6 +41,7 @@ export class SchemaBuilder extends Base {
   build(schema: any) {
     const { config } = this;
     this.schema = schema;
+    this.config.schema = schema;
     const type = this.getType(schema);
     const props = this.getProps(schema);
     this.type = type;
@@ -72,21 +73,23 @@ export class SchemaBuilder extends Base {
     return schema.additionalProperties;
   }
 
-  getRequired(obj: { required: any }) {
+  getRequired(objPropertySchema: { required: any }) {
     const { getRequired } = this.config;
-    return getRequired ? getRequired(obj) : obj.required || [];
+    return getRequired
+      ? getRequired(objPropertySchema)
+      : objPropertySchema.required || [];
   }
 
-  getProps(obj: any) {
-    return this.config.getProps(obj);
+  getProps(objPropertySchema: any) {
+    return this.config.getProps(objPropertySchema);
   }
 
-  getType(obj: any) {
-    return this.config.getType(obj);
+  getType(objPropertySchema: any) {
+    return this.config.getType(objPropertySchema);
   }
 
-  getName(obj: any) {
-    return this.config.getName(obj);
+  getName(objPropertySchema: any) {
+    return this.config.getName(objPropertySchema);
   }
 
   get output() {
@@ -130,10 +133,10 @@ export class SchemaBuilder extends Base {
     return this.config.isRequired(value);
   }
 
-  propsToShape(opts: any = {}) {
-    const shape = this.objPropsToShape(opts);
+  propsToShape(objPropertySchema: any = {}) {
+    const shape = this.objPropsToShape(objPropertySchema);
     this.objPropsShape = shape;
-    this.addPropsShape = this.additionalPropsToShape(opts, shape);
+    this.addPropsShape = this.additionalPropsToShape(objPropertySchema, shape);
     return shape;
   }
 
@@ -148,36 +151,23 @@ export class SchemaBuilder extends Base {
     const keys = Object.keys(properties);
     return keys.reduce((acc, key) => {
       const value = properties[key];
-      const schemaEntry = this.propToSchemaEntry({
-        name,
+      const propertySchema = {
         key,
         value,
-      });
+        name,
+      };
+      const schemaEntry = this.propToSchemaEntry(propertySchema, this.config);
       this.logInfo("propsToShape", { key, schemaEntry });
       acc[key] = schemaEntry;
       return acc;
     }, {});
   }
 
-  propToSchemaEntry({ name, key, value = {} }) {
-    return this.createSchemaEntry({
-      schema: this.schema,
-      name,
-      key,
-      value,
-      config: this.config,
-    });
+  propToSchemaEntry(propertySchema, config) {
+    return this.createSchemaEntry(propertySchema, config);
   }
 
-  createSchemaEntry({ schema, name, key, value, config }) {
-    // return createYupSchemaEntry({ name, key, value, config });
-    const yupEntry = config.createSchemaEntry({
-      schema,
-      name,
-      key,
-      value,
-      config,
-    });
-    return yupEntry; // .toEntry();
+  createSchemaEntry(propertySchema, config) {
+    return config.createSchemaEntry(propertySchema, config);
   }
 }

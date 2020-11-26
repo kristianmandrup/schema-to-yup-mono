@@ -1,16 +1,16 @@
 import { BaseType } from "@schema-to-yup/base-type";
 
-export const createTypeHandler = (obj, config) =>
-  TypeHandler.create(obj, config);
+export const createTypeHandler = (propertySchema, config) =>
+  TypeHandler.create(propertySchema, config);
 
 export class TypeHandler extends BaseType {
-  constructor(obj, config) {
-    super(obj, config);
+  constructor(propertySchema, config) {
+    super(propertySchema, config);
     this.init();
   }
 
-  static create(opts, config) {
-    return new TypeHandler(opts, config);
+  static create(propertySchema, config) {
+    return new TypeHandler(propertySchema, config);
   }
 
   get typeName() {

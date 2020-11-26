@@ -4,9 +4,9 @@ import { typeMatcher } from "./type-matcher";
 export class BaseGuard extends Base {
   obj: any;
 
-  constructor(obj, config) {
-    super(config);
-    this.obj = obj;
+  constructor(propertySchema, config) {
+    super(propertySchema, config);
+    this.propertySchema = propertySchema;
   }
 
   isValid(_: any) {
