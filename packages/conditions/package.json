@@ -17,8 +17,14 @@
     "@schema-to-yup/core": "0.0.1"
   },
   "devDependencies": {
-    "@schema-to-yup/core": "*"
+    "@schema-to-yup/core": "*",
+    "jest-plugin-context": "^2.9.0"
   },
+  "jest": {
+    "setupFiles": [
+      "jest-plugin-context/setup"
+    ]
+  },  
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"
   }

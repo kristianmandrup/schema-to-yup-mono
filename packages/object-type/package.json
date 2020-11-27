@@ -21,7 +21,13 @@
   "devDependencies": {
     "@schema-to-yup/core": "*",
     "@schema-to-yup/base-type": "*",
-    "@schema-to-yup/constraints": "*"
+    "@schema-to-yup/constraints": "*",
+    "jest-plugin-context": "^2.9.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-plugin-context/setup"
+    ]
   },  
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"

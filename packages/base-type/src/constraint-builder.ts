@@ -36,7 +36,7 @@ export class ConstraintBuilder extends Loggable {
   }
 
   // TODO: refactor into smaller methods!
-  build(propName: string, opts: any = {}) {
+  build(propName: string, constraint: any = {}) {
     let {
       constraintName,
       constraintValue,
@@ -45,7 +45,7 @@ export class ConstraintBuilder extends Loggable {
       yup,
       values,
       errName,
-    } = opts;
+    } = constraint;
     yup = yup || this.base;
 
     constraintValue =

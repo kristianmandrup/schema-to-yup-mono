@@ -1,5 +1,5 @@
 {
-  "name": "@schema-to-yup/builder",
+  "name": "@schema-to-yup/tests",
   "version": "0.0.1",
   "description": "d",
   "main": "./lib/index.js",
@@ -13,18 +13,24 @@
   "files": [
     "lib"
   ],
+  "dependencies": {
+    "yup": "^0.30.0"    
+  },
   "peerDependencies": {
     "@schema-to-yup/builder": "0.0.1",
     "@schema-to-yup/conditions": "0.0.1"        
   },
   "devDependencies": {
     "@schema-to-yup/builder": "*",
-    "@schema-to-yup/conditions": "*"    
+    "@schema-to-yup/conditions": "*",
+    "jest-plugin-context": "^2.9.0"    
   },
+  "jest": {
+    "setupFiles": [
+      "jest-plugin-context/setup"
+    ]
+  },  
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"
-  },
-  "dependencies": {
-    "yup": "^0.30.0"
   }
 }

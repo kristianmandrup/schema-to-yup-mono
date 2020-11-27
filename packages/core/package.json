@@ -13,6 +13,14 @@
   "files": [
     "lib"
   ],
+  "devDependencies": {
+    "jest-plugin-context": "^2.9.0"
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-plugin-context/setup"
+    ]
+  },  
   "scripts": {
     "start": "tsc -w --preserveWatchOutput"
   }

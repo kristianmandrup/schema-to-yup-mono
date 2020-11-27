@@ -22,6 +22,12 @@
     "uniq": "^1.0.1"
   },
   "devDependencies": {
-    "validator": "^13.1.17"
+    "validator": "^13.1.17",
+    "jest-plugin-context": "^2.9.0"    
+  },
+  "jest": {
+    "setupFiles": [
+      "jest-plugin-context/setup"
+    ]
   }
 }
