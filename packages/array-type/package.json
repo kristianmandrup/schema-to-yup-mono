@@ -25,7 +25,8 @@
     "@schema-to-yup/core": "*",
     "@schema-to-yup/base-type": "*",
     "@schema-to-yup/builder": "*",
-    "jest-plugin-context": "^2.9.0"
+    "jest-plugin-context": "^2.9.0",
+    "@types/jest-plugin-context": "^2.9.4"
   },
   "jest": {
     "setupFiles": [
