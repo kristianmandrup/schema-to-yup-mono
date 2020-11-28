@@ -15,12 +15,12 @@ export class ConstraintBuilder extends Loggable {
     return this.handler.errMessages;
   }
 
-  get base() {
-    return this.handler.base;
+  get instance() {
+    return this.handler.instance;
   }
 
-  set base(inst) {
-    this.handler.base = inst;
+  set setInstance(instance) {
+    this.handler.instance = instance;
   }
 
   get key() {
@@ -46,7 +46,7 @@ export class ConstraintBuilder extends Loggable {
       values,
       errName,
     } = constraint;
-    yup = yup || this.base;
+    yup = yup || this.instance;
 
     constraintValue =
       constraintValue || propValue || this.constraints[propName];
@@ -83,17 +83,17 @@ export class ConstraintBuilder extends Loggable {
     const constrainFnNames =
       this.constrainFnNames || this.config.constraintFnNames;
 
-    let newBase;
+    let newInstance;
     for (let name of constrainFnNames) {
-      newBase = this[name](values, constrOpts);
-      if (newBase) break;
+      newInstance = this[name](values, constrOpts);
+      if (newInstance) break;
     }
 
-    if (newBase) {
+    if (newInstance) {
       // const { _whitelist } = newBase;
       // const list = _whitelist && _whitelist.list;
-      this.base = newBase;
-      return newBase;
+      this.setInstance(newInstance);
+      return newInstance;
     }
 
     this.warn("buildConstraint: missing value or values options");
@@ -195,7 +195,7 @@ export class ConstraintBuilder extends Loggable {
   addConstraint(propName, opts) {
     const constraint = this.build(propName, opts);
     if (constraint) {
-      this.base = constraint;
+      this.setInstance(constraint);
       // const { _whitelist } = constraint;
       // const list = _whitelist && _whitelist.list;
       return constraint;

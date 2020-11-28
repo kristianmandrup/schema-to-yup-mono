@@ -41,14 +41,14 @@ export class TypeErrorHandler extends Loggable {
     }
   }
 
-  message() {
+  get messageMap() {
     const { config, key, type } = this;
     const { messages } = config;
     return messages[key] || messages[type] || {};
   }
 
   errMessage(errKey = "default") {
-    return this.message[errKey] || "error";
+    return this.messageMap[errKey] || "error";
   }
 
   errorMsg(msg) {
