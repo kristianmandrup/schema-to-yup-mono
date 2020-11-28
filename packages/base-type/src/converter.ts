@@ -1,16 +1,19 @@
 import uniq from "uniq";
 import { Base } from "@schema-to-yup/core";
 import { ConstraintsAdder } from "./constraints-adder";
+import { ConstraintConverter } from "./constraint-converter";
 
 const defaults = {
   classMap: {
     ConstraintsAdder,
+    ConstraintConverter,
   },
 };
 
 export class Converter extends Base {
   handler: any;
   constraintsAdder: any;
+  constraintConverter: any;
   types: any;
   constraintsMap: any;
   ProcessorClazz: any;
@@ -18,12 +21,17 @@ export class Converter extends Base {
   constructor(handler, propertySchema, config: any = {}) {
     super(propertySchema, config);
     this.handler = handler;
-    this.constraintsAdder = this.createConstraintsAdder(propertySchema, config);
     this.init();
     const { types } = this.config;
     this.types = types;
     this.constraintsMap = types.constraints || {};
     this.ProcessorClazz = this.constraintsMap[this.type].Processor;
+    this.createHelpers();
+  }
+
+  createHelpers() {
+    this.constraintsAdder = this.createConstraintsAdder();
+    this.constraintConverter = this.createConstraintConverter();
   }
 
   createMixedType() {
@@ -81,26 +89,14 @@ export class Converter extends Base {
     return this.calcTypeEnabled();
   }
 
+  convertFor(name) {
+    return this.constraintConverter.setName(name).convert();
+  }
+
   convertEnabled() {
     this.enabled.map((name) => {
-      const convertFn = this.convertFnFor(name);
-      if (convertFn) {
-        convertFn(this);
-      }
+      this.convertFor(name);
     });
-  }
-
-  convertFnFor(name) {
-    return this.customConvertFnFor(name) || this.builtInConvertFnFor(name);
-  }
-
-  customConvertFnFor(name) {
-    const typeConvertMap = this.typeConfig.convert || {};
-    return typeConvertMap[name];
-  }
-
-  builtInConvertFnFor(name) {
-    return this.constraintsProcessor.process(name);
   }
 
   get constraintsProcessor() {
@@ -122,11 +118,19 @@ export class Converter extends Base {
     this.constraintsAdder.addMappedConstraints();
   }
 
-  createConstraintsAdder(propertySchema, config) {
+  createConstraintsAdder() {
     return new this.classMap.ConstraintsAdder(
       this.handler,
-      propertySchema,
-      config
+      this.propertySchema,
+      this.config
+    );
+  }
+
+  createConstraintConverter() {
+    return new ConstraintConverter(
+      this.handler,
+      this.propertySchema,
+      this.config
     );
   }
 }

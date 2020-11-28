@@ -22,19 +22,23 @@ export class ConstraintsAdder extends Base {
     return this.handler.value;
   }
 
-  set base(inst) {
-    this.handler.base = inst;
+  set setInstance(inst) {
+    this.handler.instance = inst;
   }
 
   init() {
     this.setClassMap(defaults);
-    const constraintBuilderFactoryFn =
-      this.config.createConstraintBuilder || this.createConstraintBuilder;
-    this.constraintBuilder = constraintBuilderFactoryFn(this, this.config);
+    this.buildConstraintBuilder();
   }
 
   getConstraints() {
     return this.config.getConstraints(this.value);
+  }
+
+  buildConstraintBuilder() {
+    const constraintBuilderFactoryFn =
+      this.config.createConstraintBuilder || this.createConstraintBuilder;
+    this.constraintBuilder = constraintBuilderFactoryFn(this, this.config);
   }
 
   createConstraintBuilder(typeHandler, config = {}) {
@@ -46,18 +50,17 @@ export class ConstraintsAdder extends Base {
       propName,
       opts
     );
-    if (constraint) {
-      const { base } = constraint;
-      this.base = base;
-    }
-    return this;
+    return this.setConstraint(constraint);
   }
 
   addConstraint(propName, opts) {
     const constraint = this.constraintBuilder.addConstraint(propName, opts);
-    if (constraint) {
-      this.base = constraint;
-    }
+    return this.setConstraint(constraint);
+  }
+
+  setConstraint(constraint) {
+    if (!constraint) return;
+    this.setInstance(constraint.instance);
     return this;
   }
 
