@@ -104,24 +104,144 @@ describe("BaseType", () => {
             expect(() => bt.validateValue(value, opts)).toThrow();
           });
         });
+
+        context("valid", () => {
+          it("does not throw error", () => {
+            const value = "y";
+            const opts = {};
+            expect(() => bt.validateValue(value, opts)).toBeTruthy();
+          });
+        });
       });
 
-      // constraintsAdder;
-      // validateOnCreate(key, value, opts);
-      // init();
-      // configure();
-      // constraintNameFor(...names);
-      // initHelpers();
-      // setClassMap();
-      // getConstraints();
-      // createConstraintsProcessor();
-      // createTypeValueProcessor();
-      // createTypeModeSelector();
-      // createTypeErrorHandler();
-      // convert();
-      // createSchemaEntry();
-      // createConverter();
-      // createMixed();
+      describe("constraintsAdder", () => {
+        it("returns a constraintsAdder", () => {
+          expect(bt.constraintsAdder).toEqual({});
+        });
+      });
+
+      describe("validateOnCreate(key, value, opts);", () => {
+        context("invalid", () => {
+          it("throws error", () => {
+            const key = "x";
+            const value = {};
+            const opts = {};
+            expect(() => bt.validateOnCreate(key, value, opts)).toThrow();
+          });
+        });
+
+        context("valid", () => {
+          it("does not throw error", () => {
+            const key = "x";
+            const value = {};
+            const opts = {};
+            expect(bt.validateOnCreate(key, value, opts)).toBeTruthy();
+          });
+        });
+      });
+
+      describe("init()", () => {
+        it("initializes", () => {
+          expect(bt.init()).toEqual({});
+        });
+      });
+
+      describe("configure()", () => {
+        it("configures", () => {
+          expect(bt.configure()).toEqual({});
+        });
+      });
+
+      describe("constraintNameFor(...names)", () => {
+        it("gets constraint name", () => {
+          const names = ["x"];
+          expect(bt.constraintNameFor(...names)).toEqual("xx");
+        });
+      });
+
+      describe("initHelpers()", () => {
+        it("initializes helpers", () => {
+          bt.initHelpers();
+          expect(bt.helper).toBeTruthy();
+        });
+      });
+
+      describe("setClassMap()", () => {
+        it("sets classMap", () => {
+          bt.setClassMap();
+          expect(bt.classMap).toEqual({});
+        });
+      });
+
+      describe("getConstraints()", () => {
+        it("gets constraints", () => {
+          const constraints = bt.getConstraints();
+          expect(constraints).toEqual({});
+        });
+      });
+
+      describe("createConstraintsProcessor()", () => {
+        it("gets constraints", () => {
+          const cp = bt.createConstraintsProcessor();
+          expect(cp).toEqual({});
+        });
+      });
+
+      describe("createTypeValueProcessor()", () => {
+        it("gets constraints", () => {
+          const tvp = bt.createTypeValueProcessor();
+          expect(tvp).toEqual({});
+        });
+      });
+
+      describe("createTypeModeSelector()", () => {
+        it("gets constraints", () => {
+          const tms = bt.createTypeModeSelector();
+          expect(tms).toEqual({});
+        });
+      });
+
+      describe("createTypeErrorHandler()", () => {
+        it("gets constraints", () => {
+          const teh = bt.createTypeErrorHandler();
+          expect(teh).toEqual({});
+        });
+      });
+
+      describe("convert()", () => {
+        it("gets constraints", () => {
+          bt.convert();
+          expect(bt.instance).toEqual({});
+        });
+      });
+
+      describe("createConverter()", () => {
+        it("creates converter", () => {
+          const conv = bt.createConverter();
+          expect(conv).toEqual({});
+        });
+      });
+
+      describe("createConverter()", () => {
+        it("creates converter", () => {
+          const conv = bt.createConverter();
+          expect(conv).toEqual({});
+        });
+      });
+
+      describe("createSchemaEntry()", () => {
+        it("creates schema entry", () => {
+          const entry = bt.createSchemaEntry();
+          expect(entry).toEqual({});
+        });
+      });
+
+      describe("createMixed()", () => {
+        it("creates schema entry", () => {
+          const mixed = bt.createMixed();
+          expect(mixed).toEqual({});
+        });
+      });
     });
   });
 });

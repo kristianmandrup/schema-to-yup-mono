@@ -95,6 +95,7 @@ export class BaseType extends Base {
   validateOnCreate(key, value, opts) {
     this.validateKey(key, opts);
     this.validateValue(value, opts);
+    return this;
   }
 
   init() {
