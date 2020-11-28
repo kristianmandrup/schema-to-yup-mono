@@ -1,18 +1,19 @@
 import { Base } from "@schema-to-yup/core";
-import { TypeErrorHandler } from "./type-error-handler";
 
 export class BaseTypeConstraint extends Base {
   handler: any;
-  errorHandler: any;
 
   constructor(handler, propertySchema, config = {}) {
     super(propertySchema, config);
     this.handler = handler;
-    this.errorHandler = handler.errorHandler || this.createTypeErrorHandler();
   }
 
   setTypeInstance(inst) {
     this.handler.setTypeInstance(inst);
+  }
+
+  get errorHandler() {
+    return this.handler.errorHandler;
   }
 
   get yup() {
@@ -38,10 +39,6 @@ export class BaseTypeConstraint extends Base {
   init() {}
 
   createYupSchemaEntry(_ = {}) {}
-
-  createTypeErrorHandler() {
-    return new TypeErrorHandler(this.handler, this.config);
-  }
 
   get constraints() {
     return this.handler.constraints;

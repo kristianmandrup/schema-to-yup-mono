@@ -1,16 +1,17 @@
 import { BaseTypeConstraintsProcessor } from "..";
 
-const createBaseTypeConstraintsProcessor = (config) => {
-  return new BaseTypeConstraintsProcessor(config);
+const createBaseTypeConstraintsProcessor = (handler, config) => {
+  return new BaseTypeConstraintsProcessor(handler, config);
 };
 
 describe("BaseTypeConstraintsProcessor", () => {
   let config = {};
+  let handler = {};
 
   describe("process(name)", () => {
     let btcp;
     beforeAll(() => {
-      btcp = createBaseTypeConstraintsProcessor(config);
+      btcp = createBaseTypeConstraintsProcessor(handler, config);
     });
 
     context("instance", () => {

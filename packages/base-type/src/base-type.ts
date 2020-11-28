@@ -140,7 +140,7 @@ export class BaseType extends Base {
   setClassMap() {
     const { config } = this;
     this.classMap = {
-      ...defaults.classMap,
+      ...(defaults.classMap || {}),
       ...(config.classMap || {}),
     };
   }

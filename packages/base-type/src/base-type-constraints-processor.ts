@@ -6,8 +6,8 @@ export class BaseTypeConstraintsProcessor extends Loggable {
   factories: any;
   opts: any;
 
-  constructor(handler, opts: any = {}) {
-    super(opts.config);
+  constructor(handler, opts, config = {}) {
+    super(config);
     this.opts = opts;
     this.handler = handler;
     this.handler.normalize();
