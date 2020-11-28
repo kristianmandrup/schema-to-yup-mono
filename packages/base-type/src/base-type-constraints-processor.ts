@@ -28,7 +28,7 @@ export class BaseTypeConstraintsProcessor extends Loggable {
 
   setConstraintsMap() {
     this.constraintsMap = {
-      ...this.maps.classMap,
+      ...(this.maps.classMap || {}),
       ...(this.opts.classMap || {}),
     };
   }

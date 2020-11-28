@@ -4,8 +4,8 @@ export class TypeErrorHandler extends Loggable {
   handler: any;
   errorMessageHandler: any;
 
-  constructor(handler, opts = {}) {
-    super(opts);
+  constructor(handler, config) {
+    super(config);
     this.handler = handler;
     this.init();
   }

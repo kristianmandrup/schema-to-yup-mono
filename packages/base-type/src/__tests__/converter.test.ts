@@ -33,12 +33,6 @@ describe("Converter", () => {
         });
       });
 
-      describe("type", () => {
-        it("returns type of handler", () => {
-          expect(conv.type).toBe(handler.type);
-        });
-      });
-
       describe("typeEnabled", () => {
         it("enabled constraints for the type", () => {
           expect(conv.typeEnabled).toBe(handler.typeEnabled);

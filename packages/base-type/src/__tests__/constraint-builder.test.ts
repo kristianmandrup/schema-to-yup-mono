@@ -25,7 +25,42 @@ describe("ConstraintBuilder", () => {
     });
 
     context("instance", () => {
-      // ...
+      describe("key", () => {
+        it("returns key", () => {
+          expect(cb.key).toBe({});
+        });
+      });
+
+      describe("constraints", () => {
+        it("returns constraints", () => {
+          expect(cb.constraints).toBe({});
+        });
+      });
+
+      describe("errorMessageHandler", () => {
+        it("returns error message handler", () => {
+          expect(cb.errorMessageHandler).toBe({});
+        });
+      });
+
+      describe("errMessages", () => {
+        it("returns err messages map", () => {
+          expect(cb.errMessages).toBe({});
+        });
+      });
+
+      describe("instance", () => {
+        it("returns type instance", () => {
+          expect(cb.instance).toBe({});
+        });
+      });
+
+      describe("setInstance(inst)", () => {
+        it("sets type instance", () => {
+          const inst = {};
+          expect(cb.setInstance(inst)).toBe({});
+        });
+      });
     });
   });
 });

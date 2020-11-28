@@ -40,7 +40,7 @@ export class BaseTypeConstraint extends Base {
   createYupSchemaEntry(_ = {}) {}
 
   createTypeErrorHandler() {
-    return new TypeErrorHandler(this.propertySchema);
+    return new TypeErrorHandler(this.handler, this.config);
   }
 
   get constraints() {
@@ -49,10 +49,6 @@ export class BaseTypeConstraint extends Base {
 
   constraintNameFor(...names) {
     return this.handler.constraintNameFor(...names);
-  }
-
-  set base(base) {
-    this.handler.base = base;
   }
 
   chain(cb) {
