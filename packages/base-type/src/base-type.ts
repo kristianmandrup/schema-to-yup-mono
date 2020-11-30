@@ -56,8 +56,10 @@ export class BaseType extends Base {
     return this;
   }
 
-  chain(cb) {
-    return this.setTypeInstance(cb(this.typeInstance));
+  chain(cb, onChained?) {
+    this.setTypeInstance(cb(this.typeInstance));
+    onChained && onChained();
+    return this;
   }
 
   setInstType(name = this.typeName) {

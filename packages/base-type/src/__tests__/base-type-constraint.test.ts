@@ -66,10 +66,48 @@ describe("BaseTypeConstraint", () => {
       });
     });
 
-    // constraintNameFor(...names)
-    // chain(cb)
-    // valErrMessage(msg)
-    // valErrMessageOr(...msgNames)
-    // addConstraint(name, opts = {})
+    describe("constraintNameFor(...names)", () => {
+      it("returns constraints", () => {
+        const names = ["x", "y"];
+        expect(btc.constraintNameFor(...names)).toEqual("x");
+      });
+    });
+
+    describe("constraintNameFor(...names)", () => {
+      it("returns constraints", (done) => {
+        const names = ["x", "y"];
+        const y = 2;
+        btc.chain(
+          (x) => (x = y),
+          () => {
+            expect(btc.instance).toBe(y);
+            done();
+          }
+        );
+      });
+    });
+
+    describe("valErrMessage(msg)", () => {
+      it("returns constraints", () => {
+        const msg = "x";
+        expect(btc.valErrMessage(msg)).toEqual("x");
+      });
+    });
+
+    describe("valErrMessageOr(...msgNames)", () => {
+      it("returns constraints", () => {
+        const msgNames = ["x", "y"];
+        expect(btc.valErrMessageOr(...msgNames)).toEqual("x");
+      });
+    });
+
+    describe("addConstraint(name)", () => {
+      it("returns constraints", () => {
+        const name = "x";
+        const oldInst = btc.instance;
+        btc.addConstraint(name);
+        expect(btc.instance).not.toBe(oldInst);
+      });
+    });
   });
 });
